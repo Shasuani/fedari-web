@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/site';
+import { breadcrumbLd } from '../data/jsonld';
+---
+<BaseLayout
+  title="Cookies Policy"
+  description="How Fedari uses cookies and analytics, and how you can manage your preferences."
+  path="/cookies"
+  jsonLd={[breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Cookies Policy', path: '/cookies' }])]}
+>
+  <!-- HEADER BAND -->
+  <section class="bg-offwhite">
+    <div class="container-x section-tight pt-28 lg:pt-36">
+      <div class="max-w-3xl">
+        <span class="eyebrow">Legal</span>
+        <h1 class="display mt-5">Cookies Policy</h1>
+        <p class="mt-6 text-sm font-medium text-muted">Last updated: 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section class="section-tight bg-white">
+    <div class="container-x">
+      <div class="max-w-prose text-base leading-relaxed text-muted">
+        <div class="reveal rounded-2xl border border-line bg-offwhite p-6">
+          <p class="text-sm text-navy"><span class="font-semibold">Placeholder notice.</span> This policy is generic placeholder wording provided for layout and drafting purposes. Have it reviewed by a qualified UAE legal advisor and tailored to your actual cookie and analytics setup before you publish or launch.</p>
+        </div>
+
+        <div class="reveal mt-10 space-y-5">
+          <p>This Cookies Policy explains how {COMPANY.legalName} (&ldquo;{COMPANY.name}&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;) uses cookies and similar technologies on our website. It should be read together with our Privacy Policy.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">What are cookies?</h2>
+          <p class="mt-4">Cookies are small text files placed on your device when you visit a website. They help websites work, remember your preferences and understand how visitors use the site. Similar technologies, such as local storage, can be used for the same purposes.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">How we use cookies</h2>
+          <p class="mt-4">We use a small number of cookies to keep our website working properly and to understand how it is used so we can improve it. The main categories are:</p>
+          <ul class="mt-4 space-y-2 pl-5">
+            <li class="list-disc"><span class="font-medium text-navy">Essential cookies</span> &mdash; needed for the website to function and cannot be switched off in our systems.</li>
+            <li class="list-disc"><span class="font-medium text-navy">Analytics cookies</span> &mdash; help us understand which pages are visited and how the site performs.</li>
+          </ul>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Analytics (Google Analytics 4)</h2>
+          <p class="mt-4">We use Google Analytics 4 (GA4) to collect aggregated, mostly anonymous information about how visitors use our website &mdash; for example, which pages are most popular and how people arrive at the site. This helps us improve the content and experience. GA4 sets cookies on your device to measure this activity. We do not use analytics data to identify you personally.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Your consent and choices</h2>
+          <p class="mt-4">Where required, we ask for your consent before setting non-essential cookies such as analytics cookies. You can withdraw or change your consent at any time. You can also control cookies through your browser settings &mdash; most browsers let you block or delete cookies &mdash; though some parts of the website may not work as intended if you do.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Changes to this policy</h2>
+          <p class="mt-4">We may update this Cookies Policy from time to time to reflect changes in the technologies we use or in the law. When we do, we will update the date shown at the top of this page.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Contact us</h2>
+          <p class="mt-4">If you have any questions about our use of cookies, please contact us:</p>
+          <ul class="mt-4 space-y-1">
+            <li>Email: <a href={COMPANY.emailHref} class="link-arrow">{COMPANY.email}</a></li>
+            <li>Phone: <a href={COMPANY.phoneHref} data-track="call_click" class="link-arrow">{COMPANY.phone}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

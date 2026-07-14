@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Fedari: dev server",
+      "type": "shell",
+      "command": "npm run dev -- --port 4321",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "astro",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*astro.*",
+          "endsPattern": "(Local|ready in|localhost:4321)"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "detail": "Starts the Astro dev server on http://localhost:4321"
+    },
+    {
+      "label": "Fedari: build",
+      "type": "shell",
+      "command": "npm run build",
+      "problemMatcher": [],
+      "detail": "Static production build into dist/"
+    },
+    {
+      "label": "Fedari: preview build",
+      "type": "shell",
+      "command": "npm run preview -- --port 4321",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "astro",
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*astro.*",
+          "endsPattern": "(Local|localhost:4321)"
+        }
+      },
+      "detail": "Serves the production build from dist/"
+    }
+  ]
+}

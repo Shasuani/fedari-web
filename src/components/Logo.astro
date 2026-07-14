@@ -1,0 +1,28 @@
+---
+// Fedari logo — mark (inline SVG) + wordmark (web font for crispness).
+// variant: 'navy' (dark on light) | 'white' (reversed on navy)
+// The mark geometry is refined to match Fedari_Logo_Kit_Webdesigner.pdf.
+interface Props {
+  variant?: 'navy' | 'white';
+  withWordmark?: boolean;
+  class?: string;
+}
+const { variant = 'navy', withWordmark = true, class: cls = '' } = Astro.props;
+const wordColor = variant === 'white' ? '#FFFFFF' : '#0A1D3D';
+const markColor = variant === 'white' ? '#FFFFFF' : '#0A1D3D';
+const foldColor = variant === 'white' ? 'rgba(255,255,255,0.55)' : '#146BFF';
+---
+<a href="/" class={`inline-flex items-center gap-2.5 ${cls}`} aria-label="Fedari — Property Care. Perfected. Home">
+  <svg class="h-8 w-auto shrink-0" viewBox="0 0 100 119" fill="none" aria-hidden="true" focusable="false">
+    <!-- F monogram: continuous stem + two swept, sharp-tipped arms around an open counter -->
+    <path d="M100,0 L37,0 C25,2 7,14 0,33 L0,119 L22,119 L22,74 L64,74 C72,74 78,64 78,53 L23,52 C33,42 30,32 29,26 L78,22 Z" fill={markColor} />
+    <!-- folded facet accent along the top arm's leading edge -->
+    <path d="M2,31 C10,17 22,7 35,1 L14,34 Z" fill={foldColor} />
+  </svg>
+  {withWordmark && (
+    <span class="flex flex-col leading-none">
+      <span class="text-[1.35rem] font-bold tracking-[0.18em]" style={`color:${wordColor}`}>FEDARI</span>
+      <span class="mt-1 text-[0.5rem] font-semibold uppercase tracking-[0.24em]" style={`color:${variant === 'white' ? 'rgba(255,255,255,0.65)' : '#0F57D6'}`}>Property Care. Perfected.</span>
+    </span>
+  )}
+</a>

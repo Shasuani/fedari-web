@@ -1,0 +1,67 @@
+---
+import Logo from './Logo.astro';
+import { COMPANY, SERVICES, NAV, FOOTER_LEGAL, BUILT_BY, serviceUrl } from '../data/site';
+const year = 2026; // build-time constant
+---
+<footer class="on-navy">
+  <div class="container-x section-tight">
+    <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
+      <div>
+        <Logo variant="white" />
+        <p class="lead mt-5 max-w-xs text-white/70">{COMPANY.descriptionShort}</p>
+        <div class="mt-6 flex gap-3">
+          <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp !min-h-0 !py-2.5 !px-5 text-xs">WhatsApp</a>
+          <a href="/contact" class="btn-ghost-light !min-h-0 !py-2.5 !px-5 text-xs">Get a Quote</a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100/80">Services</h3>
+        <ul class="mt-5 space-y-2.5 text-sm text-white/70">
+          {SERVICES.map((s) => (
+            <li><a href={serviceUrl(s.slug)} class="transition-colors duration-200 ease-lux hover:text-white">{s.title}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100/80">Company</h3>
+        <ul class="mt-5 space-y-2.5 text-sm text-white/70">
+          {NAV.filter((n) => n.href !== '/').map((n) => (
+            <li><a href={n.href} class="transition-colors duration-200 ease-lux hover:text-white">{n.label}</a></li>
+          ))}
+          <li><a href="/faq" class="transition-colors duration-200 ease-lux hover:text-white">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100/80">Contact</h3>
+        <ul class="mt-5 space-y-2.5 text-sm text-white/70">
+          <li><a href={COMPANY.phoneHref} data-track="call_click" class="transition-colors duration-200 ease-lux hover:text-white">{COMPANY.phone}</a></li>
+          <li><a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="transition-colors duration-200 ease-lux hover:text-white">WhatsApp</a></li>
+          <li><a href={COMPANY.emailHref} class="transition-colors duration-200 ease-lux hover:text-white">{COMPANY.email}</a></li>
+          <li class="text-white/60">{COMPANY.flagshipCommunity} · {COMPANY.address.city}, UAE</li>
+          <li class="text-white/60">{COMPANY.hours}</li>
+          {COMPANY.social.googleBusiness && COMPANY.social.googleBusiness !== '#' && (
+            <li><a href={COMPANY.social.googleBusiness} target="_blank" rel="noopener" class="transition-colors duration-200 ease-lux hover:text-white">Reviews on Google</a></li>
+          )}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {year} {COMPANY.legalName}. All rights reserved.
+        <span class="mx-1.5 text-white/25" aria-hidden="true">·</span>
+        Made by {BUILT_BY.url
+          ? <a href={BUILT_BY.url} target="_blank" rel="noopener" class="font-medium text-white/70 transition-colors duration-200 ease-lux hover:text-white">{BUILT_BY.name}</a>
+          : <span class="font-medium text-white/70">{BUILT_BY.name}</span>}
+      </p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        {FOOTER_LEGAL.map((l) => (
+          <li><a href={l.href} class="transition-colors duration-200 ease-lux hover:text-white">{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>

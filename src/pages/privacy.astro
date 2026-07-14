@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/site';
+import { breadcrumbLd } from '../data/jsonld';
+---
+<BaseLayout
+  title="Privacy Policy"
+  description="How Fedari collects, uses and protects the personal information you share through our website and enquiry forms."
+  path="/privacy"
+  jsonLd={[breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy' }])]}
+>
+  <!-- HEADER BAND -->
+  <section class="bg-offwhite">
+    <div class="container-x section-tight pt-28 lg:pt-36">
+      <div class="max-w-3xl">
+        <span class="eyebrow">Legal</span>
+        <h1 class="display mt-5">Privacy Policy</h1>
+        <p class="mt-6 text-sm font-medium text-muted">Last updated: 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section class="section-tight bg-white">
+    <div class="container-x">
+      <div class="max-w-prose text-base leading-relaxed text-muted">
+        <div class="reveal rounded-2xl border border-line bg-offwhite p-6">
+          <p class="text-sm text-navy"><span class="font-semibold">Placeholder notice.</span> This policy is generic placeholder wording provided for layout and drafting purposes. Have it reviewed by a qualified UAE legal advisor and tailored to your actual data practices before you publish or launch.</p>
+        </div>
+
+        <div class="reveal mt-10 space-y-5">
+          <p>This Privacy Policy explains how {COMPANY.legalName} (&ldquo;{COMPANY.name}&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;) collects, uses and protects the personal information you provide when you use our website, contact us, request a quote or apply for a role. We are based in Dubai, United Arab Emirates, and handle your information in line with applicable UAE data protection laws.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Information we collect</h2>
+          <p class="mt-4">We only collect the information we need to respond to you and provide our services. Depending on how you interact with us, this may include:</p>
+          <ul class="mt-4 space-y-2 pl-5">
+            <li class="list-disc">Your name, phone number and email address.</li>
+            <li class="list-disc">Your property location or community, and details of the service you are requesting.</li>
+            <li class="list-disc">Any message, photos or notes you send us through our forms, WhatsApp or email.</li>
+            <li class="list-disc">Job application details, including your CV or supporting documents when you apply for a role with us.</li>
+            <li class="list-disc">Basic technical and usage data collected automatically, such as your device type, browser and pages visited (see our Cookies Policy).</li>
+          </ul>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">How we use your information</h2>
+          <p class="mt-4">We use the information you provide to:</p>
+          <ul class="mt-4 space-y-2 pl-5">
+            <li class="list-disc">Respond to enquiries and prepare quotes.</li>
+            <li class="list-disc">Schedule, deliver and follow up on the services you request.</li>
+            <li class="list-disc">Review and process job applications, including any CV files you submit.</li>
+            <li class="list-disc">Improve our website and understand how visitors use it.</li>
+            <li class="list-disc">Meet our legal, accounting and regulatory obligations.</li>
+          </ul>
+          <p class="mt-4">We do not sell your personal information. We only share it with trusted service providers who help us operate our business (for example, hosting or analytics providers), and only to the extent they need it to perform their role.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">CV and application files</h2>
+          <p class="mt-4">When you apply for a position, any CV or supporting file you upload is used solely to assess your application. We store it securely and retain it only for as long as needed to consider you for the role you applied for and, where relevant, future openings. You can ask us to delete your application details at any time.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">How long we keep your information</h2>
+          <p class="mt-4">We keep personal information only for as long as it is needed for the purposes described above, or for as long as required to meet legal and accounting obligations. When information is no longer needed, we securely delete or anonymise it.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Keeping your information secure</h2>
+          <p class="mt-4">We take reasonable technical and organisational measures to protect your information against loss, misuse and unauthorised access. No method of transmission or storage is completely secure, but we work to safeguard the information you share with us.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Your rights</h2>
+          <p class="mt-4">Subject to applicable UAE law, you may request access to the personal information we hold about you, ask us to correct it, or ask us to delete it. To make a request, contact us using the details below and we will respond within a reasonable timeframe.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Contact us</h2>
+          <p class="mt-4">If you have any questions about this policy or how we handle your information, please contact us:</p>
+          <ul class="mt-4 space-y-1">
+            <li>Email: <a href={COMPANY.emailHref} class="link-arrow">{COMPANY.email}</a></li>
+            <li>Phone: <a href={COMPANY.phoneHref} data-track="call_click" class="link-arrow">{COMPANY.phone}</a></li>
+            <li>Address: {COMPANY.address.street}, {COMPANY.address.city}, {COMPANY.address.country}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

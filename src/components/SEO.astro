@@ -1,0 +1,52 @@
+---
+import { COMPANY } from '../data/site';
+interface Props {
+  title: string;
+  description: string;
+  path?: string;              // e.g. '/services/ac-repair-dubai'
+  image?: string;             // OG image path
+  jsonLd?: Record<string, any> | Record<string, any>[];
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  path = '',
+  image = '/images/og-default.jpg',
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://fedari.ae';
+const canonical = `${site}${path}`;
+const ogImage = image.startsWith('http') ? image : `${site}${image}`;
+const fullTitle = title.includes(COMPANY.name) ? title : `${title} · ${COMPANY.name}`;
+const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={COMPANY.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Search Console verification [PLACEHOLDER] -->
+{COMPANY.gscToken && COMPANY.gscToken.startsWith('REPLACE') ? null : (
+  <meta name="google-site-verification" content={COMPANY.gscToken} />
+)}
+
+{blocks.map((block) => (
+  <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}

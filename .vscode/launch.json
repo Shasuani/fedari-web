@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "▶ Run Fedari (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Fedari: dev server",
+      "sourceMaps": true,
+      "smartStep": true
+    },
+    {
+      "name": "📱 Phone preview (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Fedari: dev server",
+      "runtimeArgs": [
+        "--window-size=402,874",
+        "--force-device-scale-factor=2",
+        "--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+        "--auto-open-devtools-for-tabs"
+      ]
+    },
+    {
+      "name": "▶ Run Fedari (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Fedari: dev server"
+    }
+  ],
+  "compounds": []
+}

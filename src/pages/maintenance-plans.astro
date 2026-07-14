@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import QuoteCTA from '../components/QuoteCTA.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { COMPANY } from '../data/site';
+import { PLANS } from '../data/plans';
+import { FAQ_GROUPS } from '../data/faqs';
+import { breadcrumbLd, faqLd } from '../data/jsonld';
+
+const planFaqGroup = FAQ_GROUPS.find((g) => g.category === 'Maintenance plans');
+const planFaqs = (planFaqGroup?.items ?? []).slice(0, 4);
+
+const planEnquiryFields = [
+  { name: 'name', label: 'Full name', type: 'text', required: true, autocomplete: 'name' },
+  { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+  { name: 'property_type', label: 'Property type', type: 'select', required: true, options: ['Villa', 'Townhouse', 'Apartment', 'Other'] },
+  { name: 'community', label: 'Community', type: 'text', required: true, placeholder: 'e.g. DAMAC Lagoons', list: COMPANY.communities },
+  { name: 'owner_type', label: 'You are', type: 'radio', required: true, options: ['Owner', 'Resident', 'Investor'] },
+  { name: 'preferred_plan', label: 'Preferred plan', type: 'select', required: true, options: [...PLANS.map((p) => p.name), 'Not sure yet'] },
+  { name: 'message', label: 'Anything we should know?', type: 'textarea', placeholder: 'Tell us about your home and what matters most.' },
+];
+
+const includes = [
+  { t: 'Scheduled visits', d: 'Care that happens on a set rhythm, so nothing is left until it fails.' },
+  { t: 'Vetted technicians', d: 'The same trained, insured team on every visit — people who know your home.' },
+  { t: 'Priority support', d: 'Members are seen before one-off jobs, with faster response when it matters.' },
+  { t: 'Photo reporting', d: 'A clear record after every visit, with before-and-after photos you keep.' },
+  { t: 'Member rates', d: 'Reduced pricing on any additional repairs and parts, growing across the tiers.' },
+  { t: 'One accountable team', d: 'All the main trades in-house, so you never coordinate contractors yourself.' },
+];
+
+const breadcrumb = breadcrumbLd([
+  { name: 'Home', path: '/' },
+  { name: 'Maintenance Plans', path: '/maintenance-plans' },
+]);
+---
+<BaseLayout
+  title="Maintenance plans for Dubai villas & townhouses"
+  description="Scheduled maintenance plans for Dubai villas and townhouses — three tiers for residents, homeowners and investors, with priority support, photo reporting and member rates on repairs."
+  path="/maintenance-plans"
+  jsonLd={[breadcrumb, faqLd(planFaqs)]}
+>
+  <!-- HERO -->
+  <section class="section-tight bg-white pt-28 lg:pt-36">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Maintenance plans</span>
+        <h1 class="display mt-5 text-navy">Maintenance plans for Dubai villas &amp; townhouses</h1>
+        <p class="lead mt-6 max-w-xl">Scheduled care keeps a home reliable and holds its value. A plan puts the routine servicing, safety checks and priority response on a fixed rhythm — so small issues are caught early, and you are not chasing contractors when something goes wrong.</p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="#enquire" class="btn-primary">Enquire about a plan</a>
+          <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp">Chat on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN CARDS -->
+  <section class="section bg-offwhite">
+    <div class="container-x">
+      <SectionHeading eyebrow="Choose your level" title="Three tiers of care" lead="Every plan is built around how you use your home. Move up for more visits, faster response and better member rates." />
+      <div class="mt-12 grid items-start gap-6 lg:grid-cols-3">
+        {PLANS.map((plan) => (
+          <div class:list={[
+            'reveal relative flex h-full flex-col rounded-3xl p-8',
+            plan.popular
+              ? 'bg-navy text-white ring-1 ring-navy shadow-xl lg:-mt-4'
+              : 'bg-white ring-1 ring-line',
+          ]}>
+            {plan.popular && (
+              <span class="absolute right-6 top-6 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">Most popular</span>
+            )}
+            <p class:list={['text-xs font-semibold uppercase tracking-widest', plan.popular ? 'text-blue-100' : 'text-blue-600']}>{plan.audience}</p>
+            <h3 class:list={['mt-3 text-2xl font-semibold', plan.popular ? 'text-white' : 'text-navy']}>{plan.name}</h3>
+            <p class:list={['mt-3 text-sm leading-relaxed', plan.popular ? 'text-white/70' : 'text-muted']}>{plan.tagline}</p>
+
+            <ul class:list={['mt-7 space-y-3 border-t pt-7', plan.popular ? 'border-white/15' : 'border-line']}>
+              {plan.features.map((f) => (
+                <li class="flex gap-3">
+                  <svg class="mt-0.5 shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={plan.popular ? '#146BFF' : '#0F57D6'} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span class:list={['text-sm leading-relaxed', plan.popular ? 'text-white/90' : 'text-navy']}>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            {plan.note && (
+              <p class:list={['mt-6 text-sm leading-relaxed', plan.popular ? 'text-white/60' : 'text-muted']}>{plan.note}</p>
+            )}
+
+            <div class="mt-8 flex flex-col gap-3 pt-2">
+              <a
+                href="#enquire"
+                data-plan={plan.name}
+                class:list={['w-full text-center', plan.popular ? 'btn-primary' : 'btn-secondary']}
+              >Enquire about {plan.name}</a>
+              <a
+                href={COMPANY.whatsappMessage}
+                data-track="whatsapp_click"
+                class:list={[
+                  'w-full text-center text-sm font-semibold',
+                  plan.popular ? 'text-white/80 hover:text-white' : 'text-navy hover:text-blue-600',
+                ]}
+              >or ask on WhatsApp</a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-8 max-w-2xl text-sm text-muted">Plans are tailored to each home, so pricing is confirmed in your written quote. Not sure which tier fits? Tell us about your home and we will recommend the right one.</p>
+    </div>
+  </section>
+
+  <!-- WHAT EVERY PLAN INCLUDES -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <SectionHeading eyebrow="Included in every plan" title="The standard behind every tier" lead="Whichever level you choose, the fundamentals are the same. Higher tiers add more visits, faster response and deeper cover." />
+      <div class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {includes.map((item, i) => (
+          <div class="reveal">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-semibold text-blue-600">{String(i + 1).padStart(2, '0')}</span>
+              <span class="h-px flex-1 bg-line"></span>
+            </div>
+            <h3 class="mt-3 text-base font-semibold text-navy">{item.t}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{item.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN ENQUIRY FORM -->
+  <section id="enquire" class="section bg-white">
+    <div class="container-x grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <div class="reveal">
+        <SectionHeading eyebrow="Enquire" title="Find the right plan for your villa" lead="Tell us a little about your property and we’ll recommend the plan that fits — no obligation." />
+        <ul class="mt-8 space-y-3">
+          {['A recommendation matched to how you use your villa', 'A clear breakdown of what each visit covers', 'Priority scheduling once you join'].map((t) => (
+            <li class="flex items-start gap-3 text-sm text-navy">
+              <svg class="mt-0.5 shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>{t}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-8 text-sm text-muted">Prefer to talk? <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="font-semibold text-blue-600 hover:text-navy">Message us on WhatsApp</a> or call <a href={COMPANY.phoneHref} data-track="call_click" class="font-semibold text-blue-600 hover:text-navy">{COMPANY.phone}</a>.</p>
+      </div>
+      <LeadForm
+        id="plan-enquiry"
+        class="reveal rounded-3xl bg-offwhite p-7 ring-1 ring-line sm:p-10"
+        fields={planEnquiryFields}
+        submitLabel="Enquire about a plan"
+        track="generate_lead"
+        successTitle="Thank you — we’ll be in touch"
+        successText="We’ve received your enquiry and will recommend the right plan for your villa, usually the same day."
+      />
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-offwhite">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeading eyebrow="FAQ" title="Plan questions, answered" lead="A few common questions about how the plans work. See the FAQ page for more." />
+      <div class="divide-y divide-line border-t border-line">
+        {planFaqs.map((f) => (
+          <details class="group py-5">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-semibold text-navy [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <svg class="shrink-0 transition group-open:rotate-45" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#146BFF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </summary>
+            <p class="mt-3 max-w-prose text-sm leading-relaxed text-muted">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <QuoteCTA variant="light" />
+</BaseLayout>
+
+<script>
+  function initPlanPreselect() {
+    document.querySelectorAll('[data-plan]').forEach((a) => {
+      if (a.dataset.pbound) return;
+      a.dataset.pbound = '1';
+      a.addEventListener('click', () => {
+        const sel = document.getElementById('plan-enquiry-preferred_plan');
+        if (sel) sel.value = a.getAttribute('data-plan');
+      });
+    });
+  }
+  initPlanPreselect();
+  document.addEventListener('astro:page-load', initPlanPreselect);
+</script>

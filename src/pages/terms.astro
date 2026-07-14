@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/site';
+import { breadcrumbLd } from '../data/jsonld';
+---
+<BaseLayout
+  title="Terms of Service"
+  description="The terms that apply when you use the Fedari website and engage us for property-care services in Dubai."
+  path="/terms"
+  jsonLd={[breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Terms of Service', path: '/terms' }])]}
+>
+  <!-- HEADER BAND -->
+  <section class="bg-offwhite">
+    <div class="container-x section-tight pt-28 lg:pt-36">
+      <div class="max-w-3xl">
+        <span class="eyebrow">Legal</span>
+        <h1 class="display mt-5">Terms of Service</h1>
+        <p class="mt-6 text-sm font-medium text-muted">Last updated: 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section class="section-tight bg-white">
+    <div class="container-x">
+      <div class="max-w-prose text-base leading-relaxed text-muted">
+        <div class="reveal rounded-2xl border border-line bg-offwhite p-6">
+          <p class="text-sm text-navy"><span class="font-semibold">Placeholder notice.</span> These terms are generic placeholder wording provided for layout and drafting purposes. Have them reviewed by a qualified UAE legal advisor and tailored to your actual services and contracts before you publish or launch.</p>
+        </div>
+
+        <div class="reveal mt-10 space-y-5">
+          <p>These Terms of Service (&ldquo;Terms&rdquo;) govern your use of the {COMPANY.legalName} website and the property-care services we provide. By using our website or engaging us for work, you agree to these Terms. If you do not agree, please do not use our website or services.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Our services</h2>
+          <p class="mt-4">{COMPANY.name} provides maintenance, repair and related property-care services for villas in Dubai. The specific scope of any work is set out in the quote or written scope we agree with you before work begins. We aim to carry out all work with reasonable skill and care.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Quotes and pricing</h2>
+          <ul class="mt-4 space-y-2 pl-5">
+            <li class="list-disc">Quotes are based on the information and, where relevant, the site conditions available to us at the time.</li>
+            <li class="list-disc">If the work required differs from what was quoted &mdash; for example, additional faults are found once work begins &mdash; we will discuss this with you and agree any change before proceeding.</li>
+            <li class="list-disc">Unless stated otherwise, quotes are valid for the period noted on the quote and are exclusive of any applicable taxes.</li>
+            <li class="list-disc">Payment terms are set out on your quote or invoice.</li>
+          </ul>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Scheduling and access</h2>
+          <p class="mt-4">You agree to provide safe and reasonable access to the property so we can carry out the agreed work. If we cannot access the property at a scheduled time, or a visit is cancelled at short notice, we may need to reschedule and, where applicable, apply a call-out charge as set out in your quote.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Your responsibilities</h2>
+          <ul class="mt-4 space-y-2 pl-5">
+            <li class="list-disc">Give us accurate information about the property and the issue.</li>
+            <li class="list-disc">Obtain any community, landlord or developer approvals that may be required for the work.</li>
+            <li class="list-disc">Let us know about any known hazards or restrictions at the property.</li>
+          </ul>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Liability</h2>
+          <p class="mt-4">We carry out our work with reasonable skill and care and maintain appropriate insurance. To the fullest extent permitted by law, we are not liable for indirect or consequential loss, or for issues arising from pre-existing faults, third-party work, or matters outside our reasonable control. Nothing in these Terms limits any liability that cannot be limited under applicable UAE law. Any claim relating to our work should be raised with us promptly so we can address it.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Website use</h2>
+          <p class="mt-4">The content on this website is provided for general information only and may change without notice. Images and descriptions are illustrative. You may not use our website in any way that is unlawful or that could damage, disable or impair its operation.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Governing law</h2>
+          <p class="mt-4">These Terms are governed by the laws of the Emirate of Dubai and the federal laws of the United Arab Emirates. Any dispute arising from these Terms or our services is subject to the exclusive jurisdiction of the courts of Dubai, UAE.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <h2 class="text-xl font-semibold text-navy">Contact us</h2>
+          <p class="mt-4">If you have any questions about these Terms, please contact us:</p>
+          <ul class="mt-4 space-y-1">
+            <li>Email: <a href={COMPANY.emailHref} class="link-arrow">{COMPANY.email}</a></li>
+            <li>Phone: <a href={COMPANY.phoneHref} data-track="call_click" class="link-arrow">{COMPANY.phone}</a></li>
+            <li>Address: {COMPANY.address.street}, {COMPANY.address.city}, {COMPANY.address.country}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileActionBar from '../components/MobileActionBar.astro';
+import SEO from '../components/SEO.astro';
+import { ViewTransitions } from 'astro:transitions';
+import { COMPANY } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  jsonLd?: any;
+  transparentHeader?: boolean;
+  noindex?: boolean;
+}
+const { title, description, path, image, jsonLd, transparentHeader = false, noindex } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0A1D3D" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <ViewTransitions />
+    <SEO title={title} description={description} path={path} image={image} jsonLd={jsonLd} noindex={noindex} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-navy focus:px-5 focus:py-2 focus:text-white">Skip to content</a>
+
+    <Header transparent={transparentHeader} />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer transition:persist />
+    <MobileActionBar transition:persist />
+    <div class="h-16 lg:hidden" aria-hidden="true"></div>
+
+    <!-- Scroll reveal + lazy-image fade-in — re-run after every View Transitions navigation -->
+    <script>
+      let io;
+      function initEnhance() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Reveal on scroll
+        const els = document.querySelectorAll('.reveal:not(.is-in)');
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-in'));
+        } else {
+          if (io) io.disconnect();
+          io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+            });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+          els.forEach((el) => io.observe(el));
+        }
+
+        // Fade lazy images in once decoded
+        document.querySelectorAll('img[loading="lazy"]:not([data-loaded])').forEach((img) => {
+          if (img.complete) img.dataset.loaded = '';
+          else img.addEventListener('load', () => { img.dataset.loaded = ''; }, { once: true });
+        });
+      }
+      initEnhance();
+      document.addEventListener('astro:page-load', initEnhance);
+    </script>
+
+    <!-- GA4 conversion event delegation (loads only when a real ID is set) -->
+    <script define:vars={{ ga4: COMPANY.ga4Id }}>
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('[data-track]');
+        if (!a) return;
+        const ev = a.getAttribute('data-track');
+        if (window.gtag) window.gtag('event', ev);
+      });
+    </script>
+    {COMPANY.ga4Id && !COMPANY.ga4Id.includes('XXXX') && (
+      <>
+        <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${COMPANY.ga4Id}`}></script>
+        <script is:inline define:vars={{ ga4: COMPANY.ga4Id }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag; gtag('js', new Date()); gtag('config', ga4);
+        </script>
+      </>
+    )}
+  </body>
+</html>

@@ -1,0 +1,182 @@
+---
+import { COMPANY } from '../data/site';
+
+// Reusable, accessible lead form with generic client-side validation.
+// Used for the Maintenance Plan Enquiry and Emergency Request forms.
+// field.type: 'text' | 'tel' | 'email' | 'textarea' | 'select' | 'radio' | 'file' | 'checkbox'
+interface Field {
+  name: string;
+  label: string;
+  type: string;
+  required?: boolean;
+  placeholder?: string;
+  help?: string;
+  autocomplete?: string;
+  options?: string[];
+  accept?: string;
+  multiple?: boolean;
+  list?: string[];
+}
+
+interface Props {
+  id: string;
+  fields: Field[];
+  submitLabel?: string;
+  successTitle?: string;
+  successText?: string;
+  track?: string;
+  class?: string;
+}
+const {
+  id,
+  fields,
+  submitLabel = 'Send enquiry',
+  successTitle = 'Thank you — your enquiry is in',
+  successText = 'We have received your details and will come back to you, usually the same day. For anything urgent, message us on WhatsApp.',
+  track = 'generate_lead',
+  class: cls = '',
+} = Astro.props;
+const req = (r?: boolean) => r ? { required: true, 'aria-required': 'true' } : {};
+---
+<div class={cls}>
+  <form id={id} action="https://formspree.io/f/REPLACE_ME" method="post" enctype="multipart/form-data" novalidate class="js-leadform space-y-6" data-lead-track={track}>
+    {fields.map((f) => (
+      f.type === 'checkbox' ? (
+        <div class="field">
+          <label class="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-navy">
+            <input class="mt-0.5 h-5 w-5 shrink-0 rounded border-line text-blue-600 focus:ring-2 focus:ring-blue/30" type="checkbox" id={`${id}-${f.name}`} name={f.name} {...req(f.required)} />
+            <span>{f.label}{f.required && <span class="text-blue-600" aria-hidden="true"> *</span>}</span>
+          </label>
+          <p class="field-error hidden" data-error-for={f.name} role="alert">Please tick this box to continue.</p>
+        </div>
+      ) : f.type === 'radio' ? (
+        <fieldset class="field">
+          <legend class="field-label">{f.label}{f.required && <span class="req" aria-hidden="true"> *</span>}</legend>
+          <div class="mt-1 flex flex-wrap gap-3">
+            {f.options.map((o, i) => (
+              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-line bg-white px-4 py-2.5 text-sm font-medium text-navy transition has-[:checked]:border-blue has-[:checked]:bg-blue-100">
+                <input class="h-4 w-4 text-blue-600 focus:ring-2 focus:ring-blue/30" type="radio" name={f.name} value={o} checked={!f.required && i === 0} {...req(f.required)} />
+                {o}
+              </label>
+            ))}
+          </div>
+          <p class="field-error hidden" data-error-for={f.name} role="alert">Please choose an option.</p>
+        </fieldset>
+      ) : (
+        <div class="field">
+          <label class="field-label" for={`${id}-${f.name}`}>
+            {f.label}{f.required && <span class="req" aria-hidden="true"> *</span>}
+            {f.type === 'file' && <span class="field-help inline font-normal"> (optional)</span>}
+          </label>
+          {f.type === 'textarea' ? (
+            <textarea class="field-input" id={`${id}-${f.name}`} name={f.name} rows="4" placeholder={f.placeholder} {...req(f.required)} aria-describedby={`${id}-${f.name}-err`}></textarea>
+          ) : f.type === 'select' ? (
+            <select class="field-input" id={`${id}-${f.name}`} name={f.name} {...req(f.required)} aria-describedby={`${id}-${f.name}-err`}>
+              <option value="">Select…</option>
+              {f.options.map((o) => (<option value={o}>{o}</option>))}
+            </select>
+          ) : f.type === 'file' ? (
+            <input class="field-input py-2.5 file:mr-4 file:rounded-full file:border-0 file:bg-navy file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-navy-700" type="file" id={`${id}-${f.name}`} name={f.name} accept={f.accept} multiple={f.multiple} aria-describedby={`${id}-${f.name}-err`} />
+          ) : (
+            <input class="field-input" type={f.type} id={`${id}-${f.name}`} name={f.name} placeholder={'placeholder' in f ? f.placeholder : undefined} autocomplete={'autocomplete' in f ? f.autocomplete : undefined} list={'list' in f && f.list ? `${id}-${f.name}-list` : undefined} {...req(f.required)} aria-describedby={`${id}-${f.name}-err`} />
+          )}
+          {'list' in f && f.list && (
+            <datalist id={`${id}-${f.name}-list`}>{f.list.map((o) => (<option value={o}></option>))}</datalist>
+          )}
+          {'help' in f && f.help && <p class="field-help">{f.help}</p>}
+          <p class="field-error hidden" id={`${id}-${f.name}-err`} data-error-for={f.name} role="alert">Please complete this field.</p>
+        </div>
+      )
+    ))}
+
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+
+    <div>
+      <button type="submit" class="btn-primary w-full sm:w-auto">{submitLabel}</button>
+      <p class="field-error mt-4 hidden" data-form-error role="alert">Something went wrong. Please try again, or contact us on WhatsApp.</p>
+    </div>
+  </form>
+
+  <div data-success class="hidden" role="status" aria-live="polite">
+    <div class="flex flex-col items-center py-10 text-center">
+      <span class="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+      </span>
+      <h2 class="h3 mt-6">{successTitle}</h2>
+      <p class="mt-3 max-w-sm text-sm leading-relaxed text-muted">{successText}</p>
+      <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" target="_blank" rel="noopener" class="btn-whatsapp mt-7">Chat on WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initLeadForms() {
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  document.querySelectorAll('form.js-leadform').forEach((form) => {
+    if (form.dataset.bound) return;
+    form.dataset.bound = '1';
+    const wrap = form.parentElement;
+    const success = wrap && wrap.querySelector('[data-success]');
+    const formError = form.querySelector('[data-form-error]');
+    const submitBtn = form.querySelector('[type="submit"]');
+    const required = Array.from(form.querySelectorAll('[required]'));
+
+    const valid = (el) => {
+      if (el.type === 'checkbox') return el.checked;
+      if (el.type === 'radio') return !!form.querySelector(`[name="${el.name}"]:checked`);
+      const v = (el.value || '').trim();
+      if (!v) return false;
+      if (el.type === 'email') return emailRe.test(v);
+      if (el.type === 'tel') return v.length >= 6;
+      return true;
+    };
+    const showError = (el, show) => {
+      const err = form.querySelector(`[data-error-for="${el.name}"]`);
+      if (err) err.classList.toggle('hidden', !show);
+      if (show) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    };
+
+    required.forEach((el) => {
+      const ev = el.type === 'checkbox' || el.type === 'radio' ? 'change' : 'blur';
+      el.addEventListener(ev, () => { if (el.getAttribute('aria-invalid') === 'true') showError(el, !valid(el)); });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formError && formError.classList.add('hidden');
+      let firstInvalid = null;
+      const seen = new Set();
+      required.forEach((el) => {
+        if (el.type === 'radio' && seen.has(el.name)) return;
+        seen.add(el.name);
+        const ok = valid(el);
+        showError(el, !ok);
+        if (!ok && !firstInvalid) firstInvalid = el;
+      });
+      if (firstInvalid) { firstInvalid.focus(); return; }
+
+      submitBtn.disabled = true;
+      const orig = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
+      try {
+        const res = await fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+        if (!res.ok) throw new Error('bad');
+        form.classList.add('hidden');
+        if (success) {
+          success.classList.remove('hidden');
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        }
+        if (window.gtag) window.gtag('event', form.dataset.leadTrack || 'generate_lead');
+      } catch (err) {
+        formError && formError.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = orig;
+      }
+    });
+  });
+  }
+  initLeadForms();
+  document.addEventListener('astro:page-load', initLeadForms);
+</script>

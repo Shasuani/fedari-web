@@ -1,0 +1,239 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import QuoteCTA from '../components/QuoteCTA.astro';
+import { COMPANY, SERVICES } from '../data/site';
+import { localBusiness, faqLd } from '../data/jsonld';
+
+const trust = [
+  { t: 'Certified & insured', d: 'Vetted, trained technicians and full liability cover.' },
+  { t: '24/7 emergency', d: 'A real response line for leaks, AC failures and outages.' },
+  { t: 'Transparent quotes', d: 'Clear scope and pricing before any work begins.' },
+  { t: 'Dubai specialists', d: 'We know the residential communities and their common issues.' },
+];
+
+const pillars = [
+  { t: 'Local specialists', d: 'A Dubai team that understands how villas and townhouses are built, the climate and community rules.' },
+  { t: 'Tailored plans', d: 'Care matched to your home and how you use it — not a generic package.' },
+  { t: 'Transparent pricing', d: 'Written scope and cost up front. No surprises on the invoice.' },
+  { t: 'Photo reporting', d: 'Every visit documented with before-and-after photos you can keep.' },
+];
+
+const steps = [
+  { n: '01', t: 'Contact', d: 'Message or call us with the issue — photos on WhatsApp help us move faster.' },
+  { n: '02', t: 'Assess', d: 'We review the details and, where needed, inspect to find the real cause.' },
+  { n: '03', t: 'Quote', d: 'You get a clear, written scope and price before any work begins.' },
+  { n: '04', t: 'Schedule', d: 'We book a time that suits you with a vetted, insured technician.' },
+  { n: '05', t: 'Complete', d: 'The work is carried out properly, cleanly and to a premium standard.' },
+  { n: '06', t: 'Report', d: 'You receive before-and-after photos and a record of what was done.' },
+];
+
+const gallery = [1, 2, 3, 4, 5, 6];
+
+const testimonials = [
+  { name: 'Placeholder — verified client', area: 'Emirates Hills' },
+  { name: 'Placeholder — verified client', area: 'Palm Jumeirah' },
+  { name: 'Placeholder — verified client', area: 'Arabian Ranches' },
+];
+
+const faqs = [
+  { q: 'Which areas of Dubai do you cover?', a: 'We serve villa and townhouse communities across Dubai. Share your location when you enquire and we’ll confirm scheduling.' },
+  { q: 'How quickly can you respond to an emergency?', a: 'Our emergency line operates 24/7 for issues like water leaks, AC failures and electrical faults. Contact us and we’ll give you a realistic response time.' },
+  { q: 'Do you provide a quote before starting work?', a: 'Yes. You receive a written scope and price before any work begins, so there are no surprises.' },
+  { q: 'Do you offer ongoing maintenance plans?', a: 'Yes — three tiers designed for residents, homeowners and investors, with scheduled checks, priority support and photo reporting.' },
+  { q: 'How do I get started?', a: 'Send us a message on WhatsApp, call us, or request a quote online. Share a few details about your home and the issue, and we’ll take it from there.' },
+];
+---
+<BaseLayout
+  title="Premium property care for Dubai villas & townhouses"
+  description="Fedari provides premium maintenance, repairs and 24/7 emergency care for Dubai villas and townhouses — AC, plumbing, electrical, handyman and more, with transparent quotes and photo reporting."
+  path=""
+  transparentHeader={true}
+  jsonLd={[localBusiness, faqLd(faqs)]}
+>
+  <!-- HERO -->
+  <section class="relative flex min-h-[92svh] items-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/hero-home.jpg" alt="Contemporary Dubai villa at dusk with warm interior lighting" width="1920" height="1280" fetchpriority="high" decoding="async" class="hero-zoom h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/60 to-navy/25"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent"></div>
+    </div>
+    <div class="container-x relative pt-28">
+      <div class="max-w-2xl text-white">
+        <span class="eyebrow text-blue-100"><span class="!bg-blue-100/80"></span>Property Care. Perfected.</span>
+        <h1 class="display mt-5 text-white">Premium property care for Dubai villas &amp; townhouses</h1>
+        <p class="lead mt-6 max-w-xl text-white/80">Maintenance, repairs and 24/7 emergency service — delivered by a vetted local team, with transparent quotes and photo reporting on every visit.</p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="btn-primary">Get a quote</a>
+          <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp">Chat on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="border-b border-line bg-white">
+    <div class="container-x grid grid-cols-2 gap-x-6 gap-y-8 py-10 lg:grid-cols-4">
+      {trust.map((item) => (
+        <div class="reveal">
+          <p class="text-sm font-semibold text-navy">{item.t}</p>
+          <p class="mt-1 text-sm text-muted">{item.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section class="section bg-offwhite">
+    <div class="container-x">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <SectionHeading eyebrow="What we do" title="Complete care for your home" lead="Nine specialist services, one accountable team — from urgent repairs to scheduled preventive maintenance." />
+        <a href="/services" class="link-arrow shrink-0">View all services
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {SERVICES.map((s) => (
+          <div class="reveal"><ServiceCard {...s} /></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FEDARI (photo split) -->
+  <section class="section bg-white">
+    <div class="container-x grid items-center gap-14 lg:grid-cols-2">
+      <div class="reveal relative overflow-hidden rounded-3xl">
+        <img src="/images/why-fedari.jpg" alt="Fedari technician inspecting a villa air-conditioning unit" width="900" height="1050" loading="lazy" decoding="async" class="aspect-[4/5] w-full object-cover" />
+      </div>
+      <div>
+        <SectionHeading eyebrow="Why Fedari" title="Property care, done properly" lead="We built Fedari to bring reliability and clear communication to property maintenance in Dubai." />
+        <div class="mt-10 grid gap-x-8 gap-y-9 sm:grid-cols-2">
+          {pillars.map((p, i) => (
+            <div class="reveal">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-blue-600">{String(i + 1).padStart(2, '0')}</span>
+                <span class="h-px flex-1 bg-line"></span>
+              </div>
+              <h3 class="mt-3 text-base font-semibold text-navy">{p.t}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section bg-offwhite">
+    <div class="container-x">
+      <SectionHeading eyebrow="How it works" title="Six simple steps, start to finish" align="center" class="mx-auto" />
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {steps.map((s) => (
+          <div class="reveal card">
+            <span class="text-3xl font-bold text-blue/20">{s.n}</span>
+            <h3 class="h3 mt-3">{s.t}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS PREVIEW -->
+  <section class="section bg-white">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div>
+        <SectionHeading eyebrow="Maintenance plans" title="Care that stays ahead of problems" lead="Scheduled checks, priority support and photo reporting — in three tiers for residents, homeowners and investors." />
+        <ul class="mt-8 space-y-3">
+          {['Essential — for residents', 'Plus — for homeowners (most popular)', 'Signature — for investors'].map((t) => (
+            <li class="flex items-center gap-3 text-navy">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="text-sm font-medium">{t}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/maintenance-plans" class="btn-secondary mt-9">Compare plans</a>
+      </div>
+      <div class="reveal relative overflow-hidden rounded-3xl">
+        <img src="/images/plans.jpg" alt="Bright, well-maintained villa living space" width="1000" height="800" loading="lazy" decoding="async" class="aspect-[5/4] w-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section bg-offwhite">
+    <div class="container-x">
+      <SectionHeading eyebrow="Recent work" title="A look at the standard we hold" lead="Placeholder gallery — replace with real Fedari project photography before launch." />
+      <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3">
+        {gallery.map((n) => (
+          <div class="reveal overflow-hidden rounded-2xl">
+            <img src={`/images/gallery/${n}.jpg`} alt={`Fedari completed villa project ${n}`} width="600" height="600" loading="lazy" decoding="async" class="aspect-square w-full object-cover transition duration-700 ease-lux hover:scale-105" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EMERGENCY BAND -->
+  <section class="relative overflow-hidden bg-navy">
+    <div class="container-x section flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <div class="max-w-xl text-white">
+        <span class="eyebrow text-blue-100">24/7 emergency</span>
+        <h2 class="h2 mt-4 text-white">A leak or breakdown can’t wait</h2>
+        <p class="lead mt-4 text-white/70">Water leaks, AC failures, power faults — our emergency line is open around the clock.</p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a href={COMPANY.phoneHref} data-track="call_click" class="btn-primary">Call {COMPANY.phone}</a>
+        <a href="/emergency-repairs" class="btn-ghost-light">Emergency info</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (placeholders) -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <SectionHeading eyebrow="Reviews" title="In our clients’ words" lead="Placeholder testimonials shown for layout. Replace with real, verified client reviews before launch." />
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {testimonials.map((r) => (
+          <figure class="reveal card">
+            <div class="flex gap-1 text-blue" aria-hidden="true">
+              {[1,2,3,4,5].map(() => (<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3 6.9 7.5.6-5.7 4.9 1.8 7.3L12 18l-6.6 3.7 1.8-7.3L1.5 9.5 9 8.9z"/></svg>))}
+            </div>
+            <blockquote class="mt-4 text-sm leading-relaxed text-navy">“Placeholder review text. The client will provide a genuine quote describing their experience with Fedari.”</blockquote>
+            <figcaption class="mt-5 text-sm">
+              <span class="font-semibold text-navy">{r.name}</span>
+              <span class="block text-muted">{r.area}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-offwhite">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <SectionHeading eyebrow="FAQ" title="Answers, in plain English" lead="Everything you might want to know before getting in touch." />
+        <a href="/faq" class="link-arrow mt-6">See all FAQs
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="divide-y divide-line border-t border-line">
+        {faqs.map((f) => (
+          <details class="group py-5">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-semibold text-navy [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <svg class="shrink-0 transition group-open:rotate-45" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#146BFF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </summary>
+            <p class="mt-3 max-w-prose text-sm leading-relaxed text-muted">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <QuoteCTA />
+</BaseLayout>

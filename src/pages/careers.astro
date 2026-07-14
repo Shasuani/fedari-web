@@ -1,0 +1,348 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import QuoteCTA from '../components/QuoteCTA.astro';
+import { COMPANY } from '../data/site';
+import { VACANCIES } from '../data/vacancies';
+import { jobPostingLd, breadcrumbLd } from '../data/jsonld';
+
+const benefits = [
+  { t: 'Fair, on-time pay', d: 'Competitive salaries paid on schedule, with clear terms from day one.' },
+  { t: 'Proper tools & vehicles', d: 'The equipment and transport you need to do the job well, provided by us.' },
+  { t: 'Real training', d: 'Ongoing skills development and support to grow across trades and responsibilities.' },
+  { t: 'Respect on the job', d: 'A team that values careful work, honest communication and treating clients’ homes with care.' },
+  { t: 'Steady, planned work', d: 'Organised schedules and coordinated job lists — not chaotic days.' },
+  { t: 'Room to progress', d: 'Clear paths from field roles into senior and coordination positions as we grow.' },
+];
+
+// Position options for the application form.
+const positions = [...VACANCIES.map((v) => v.title), 'General / talent pool'];
+
+// Pre-filled WhatsApp apply link (encodes a starter message).
+const waApply = `${COMPANY.whatsappHref}?text=${encodeURIComponent(
+  "Hi Fedari, I'd like to apply for a role. My name is ",
+)}`;
+
+const jsonLd = [
+  ...VACANCIES.map((v) =>
+    jobPostingLd({ title: v.title, description: v.summary, department: v.department, location: v.location }),
+  ),
+  breadcrumbLd([
+    { name: 'Home', path: '/' },
+    { name: 'Careers', path: '/careers' },
+  ]),
+];
+---
+<BaseLayout
+  title="Careers at Fedari"
+  description="Join Fedari, a premium property-care team for Dubai villas and townhouses. Open roles for AC technicians, plumbers, handymen and operations. Apply online or on WhatsApp."
+  path="/careers"
+  jsonLd={jsonLd}
+>
+  <!-- HERO -->
+  <section class="on-navy">
+    <div class="container-x section-tight pt-32 lg:pt-36">
+      <div class="max-w-2xl">
+        <span class="eyebrow text-blue-100">Careers</span>
+        <h1 class="display mt-5">Careers at Fedari</h1>
+        <p class="lead mt-6 max-w-xl text-white/75">
+          We are building a property-care team that Dubai villa owners can rely on. If you take pride in careful work
+          and clear communication, we would like to hear from you.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="#open-roles" class="btn-primary">See open roles</a>
+          <a href={waApply} data-track="whatsapp_click" class="btn-whatsapp">Apply on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO + WHY WORK HERE -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <SectionHeading
+        eyebrow="Why work here"
+        title="A team built on doing things properly"
+        lead="Fedari brings reliability and standards to villa maintenance. That starts with looking after the people who do the work — with the tools, training and respect to do it well."
+      />
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {benefits.map((b) => (
+          <div class="reveal card">
+            <h3 class="text-base font-semibold text-navy">{b.t}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{b.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- OPEN ROLES -->
+  <section id="open-roles" class="section bg-offwhite">
+    <div class="container-x">
+      <SectionHeading
+        eyebrow="Open roles"
+        title="Positions we’re hiring for"
+        lead="All roles are based in Dubai. Don’t see an exact match? Apply to our talent pool and we’ll keep your details on file."
+      />
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        {VACANCIES.map((v) => (
+          <article class="reveal card flex flex-col">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="eyebrow-plain text-blue-600">{v.department}</span>
+            </div>
+            <h3 class="h3 mt-3">{v.title}</h3>
+            <div class="mt-3 flex flex-wrap gap-2 text-xs font-medium text-navy">
+              <span class="rounded-full border border-line bg-offwhite px-3 py-1">{v.location}</span>
+              <span class="rounded-full border border-line bg-offwhite px-3 py-1">{v.type}</span>
+            </div>
+            <p class="mt-4 flex-1 text-sm leading-relaxed text-muted">{v.summary}</p>
+            <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <a href="#apply" class="link-arrow">Apply for this role
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a
+                href={`${COMPANY.whatsappHref}?text=${encodeURIComponent(`Hi Fedari, I'd like to apply for the ${v.title} role. My name is `)}`}
+                data-track="whatsapp_click"
+                class="text-sm font-semibold text-navy hover:text-blue-600"
+              >Apply on WhatsApp</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FORM -->
+  <section class="section bg-white">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <SectionHeading
+          eyebrow="Apply"
+          title="Send us your application"
+          lead="Fill in the form and attach your CV. We review every application and reply to those we’d like to take further."
+        />
+        <div class="mt-8 rounded-2xl border border-line bg-offwhite p-6">
+          <p class="text-sm font-semibold text-navy">Prefer to apply on WhatsApp?</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Send us a message with the role you’re interested in and a short introduction. You can share your CV in the chat.
+          </p>
+          <a href={waApply} data-track="whatsapp_click" class="btn-whatsapp mt-5 w-full sm:w-auto">Apply on WhatsApp</a>
+        </div>
+        <p class="mt-6 max-w-sm text-sm leading-relaxed text-muted">
+          <span class="font-semibold text-navy">Talent pool:</span> not the right time or role? Choose “General / talent pool”
+          below and we’ll keep your details on file for future openings.
+        </p>
+      </div>
+
+      <div>
+        <!--
+          PLACEHOLDER: replace the Formspree endpoint below with a real one before launch.
+          IMPORTANT: CV upload must be handled securely server-side — validate the file
+          type again on the server, enforce a hard size limit (max 5MB), scan uploads,
+          and store them in a private, access-controlled location. Client-side checks
+          below are for user experience only and are not a security control.
+        -->
+        <form
+          id="apply"
+          action="https://formspree.io/f/REPLACE_ME"
+          method="post"
+          enctype="multipart/form-data"
+          novalidate
+          class="rounded-3xl border border-line bg-white p-6 shadow-card sm:p-9"
+        >
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="field sm:col-span-2">
+              <label class="field-label" for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+              <input class="field-input" id="name" name="name" type="text" autocomplete="name" required aria-required="true" />
+              <p class="field-error" data-error-for="name" hidden>Please enter your full name.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input class="field-input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-required="true" />
+              <p class="field-error" data-error-for="phone" hidden>Please enter a phone number.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input class="field-input" id="email" name="email" type="email" autocomplete="email" required aria-required="true" />
+              <p class="field-error" data-error-for="email" hidden>Please enter a valid email address.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="position">Position <span class="req" aria-hidden="true">*</span></label>
+              <select class="field-input" id="position" name="position" required aria-required="true">
+                <option value="" selected disabled>Select a role</option>
+                {positions.map((p) => (<option value={p}>{p}</option>))}
+              </select>
+              <p class="field-error" data-error-for="position" hidden>Please select a position.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="experience">Years of experience <span class="req" aria-hidden="true">*</span></label>
+              <select class="field-input" id="experience" name="experience" required aria-required="true">
+                <option value="" selected disabled>Select</option>
+                <option value="0-1">Less than 1 year</option>
+                <option value="1-3">1–3 years</option>
+                <option value="3-5">3–5 years</option>
+                <option value="5-10">5–10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+              <p class="field-error" data-error-for="experience" hidden>Please select your experience.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="visa">Visa status <span class="req" aria-hidden="true">*</span></label>
+              <select class="field-input" id="visa" name="visa" required aria-required="true">
+                <option value="" selected disabled>Select</option>
+                <option value="uae-resident">UAE resident (own visa)</option>
+                <option value="employment-visa">On employment visa (transferable)</option>
+                <option value="visit-visa">On visit visa</option>
+                <option value="need-sponsorship">Need sponsorship / relocating</option>
+              </select>
+              <p class="field-error" data-error-for="visa" hidden>Please select your visa status.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="availability">Availability <span class="req" aria-hidden="true">*</span></label>
+              <select class="field-input" id="availability" name="availability" required aria-required="true">
+                <option value="" selected disabled>Select</option>
+                <option value="immediate">Immediately</option>
+                <option value="2-weeks">Within 2 weeks</option>
+                <option value="1-month">Within 1 month</option>
+                <option value="notice-period">Serving notice period</option>
+              </select>
+              <p class="field-error" data-error-for="availability" hidden>Please select your availability.</p>
+            </div>
+
+            <div class="field sm:col-span-2">
+              <label class="field-label" for="cv">CV / résumé <span class="req" aria-hidden="true">*</span></label>
+              <input class="field-input file:mr-4 file:rounded-lg file:border-0 file:bg-navy file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-navy-700" id="cv" name="cv" type="file" accept=".pdf,.doc,.docx" required aria-required="true" aria-describedby="cv-help" />
+              <p class="field-help" id="cv-help">PDF, DOC or DOCX. Maximum file size 5MB.</p>
+              <p class="field-error" data-error-for="cv" hidden>Please attach your CV as a PDF, DOC or DOCX under 5MB.</p>
+            </div>
+
+            <div class="field sm:col-span-2">
+              <label class="field-label" for="message">Anything you’d like to add</label>
+              <textarea class="field-input" id="message" name="message" placeholder="Tell us briefly about your experience or why you’d like to join Fedari."></textarea>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label class="flex items-start gap-3 text-sm leading-relaxed text-navy">
+                <input type="checkbox" id="consent" name="consent" required aria-required="true" class="mt-1 h-5 w-5 shrink-0 rounded border-line text-blue focus:ring-2 focus:ring-blue/30" />
+                <span>I consent to Fedari storing the details and CV I’ve submitted for recruitment purposes. <span class="req" aria-hidden="true">*</span></span>
+              </label>
+              <p class="field-error mt-2" data-error-for="consent" hidden>Please give your consent to continue.</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <button type="submit" class="btn-primary w-full sm:w-auto">Submit application</button>
+            <p class="text-xs text-muted">We’ll only use your details to consider you for roles at Fedari.</p>
+          </div>
+
+          <p class="field-error mt-4" data-error-for="form" hidden>Please check the highlighted fields and try again.</p>
+
+          <!-- Success state -->
+          <div id="apply-success" role="status" tabindex="-1" hidden class="mt-6 rounded-2xl border border-blue/30 bg-blue-100 p-6">
+            <p class="text-base font-semibold text-navy">Thank you — your application has been sent.</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              We review every application and will be in touch if there’s a good fit. If your role is urgent, you can also reach us on WhatsApp.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <QuoteCTA />
+</BaseLayout>
+
+<script>
+  function initApplyForm() {
+    const form = document.getElementById('apply') as HTMLFormElement | null;
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = '1';
+    const MAX_BYTES = 5 * 1024 * 1024; // 5MB
+    const ALLOWED = ['.pdf', '.doc', '.docx'];
+    const successBox = document.getElementById('apply-success');
+
+    const showError = (name: string, show: boolean) => {
+      const el = form.querySelector(`[data-error-for="${name}"]`) as HTMLElement | null;
+      const field = form.querySelector(`#${name}`) as HTMLElement | null;
+      if (el) el.hidden = !show;
+      if (field) {
+        if (show) field.setAttribute('aria-invalid', 'true');
+        else field.removeAttribute('aria-invalid');
+      }
+    };
+
+    const validEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let ok = true;
+      let firstBad: HTMLElement | null = null;
+
+      const flag = (name: string, bad: boolean) => {
+        showError(name, bad);
+        if (bad) {
+          ok = false;
+          if (!firstBad) firstBad = form.querySelector(`#${name}`) as HTMLElement | null;
+        }
+      };
+
+      const val = (name: string) => (form.querySelector(`#${name}`) as HTMLInputElement | HTMLSelectElement | null)?.value.trim() ?? '';
+
+      flag('name', val('name').length < 2);
+      flag('phone', val('phone').length < 6);
+      flag('email', !validEmail(val('email')));
+      flag('position', val('position') === '');
+      flag('experience', val('experience') === '');
+      flag('visa', val('visa') === '');
+      flag('availability', val('availability') === '');
+
+      // CV file validation (UX only — server must re-validate securely).
+      const cv = form.querySelector('#cv') as HTMLInputElement | null;
+      const file = cv?.files?.[0];
+      let cvBad = !file;
+      if (file) {
+        const nameLc = file.name.toLowerCase();
+        const extOk = ALLOWED.some((ext) => nameLc.endsWith(ext));
+        const sizeOk = file.size <= MAX_BYTES;
+        cvBad = !extOk || !sizeOk;
+      }
+      flag('cv', cvBad);
+
+      const consent = form.querySelector('#consent') as HTMLInputElement | null;
+      flag('consent', !consent?.checked);
+
+      const formErr = form.querySelector('[data-error-for="form"]') as HTMLElement | null;
+      if (formErr) formErr.hidden = ok;
+
+      if (!ok) {
+        firstBad?.focus();
+        return;
+      }
+
+      // Passed validation. Fire lead event, show inline success state.
+      if (typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'generate_lead', { form: 'careers_application' });
+      }
+
+      // NOTE: with a real Formspree endpoint, submit via fetch here and only show
+      // success on a 200 response. With the placeholder endpoint we show the
+      // success state directly so the flow is reviewable.
+      form.querySelectorAll('input, select, textarea, button').forEach((el) => {
+        (el as HTMLElement).setAttribute('disabled', 'true');
+      });
+      if (successBox) {
+        successBox.hidden = false;
+        successBox.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+        (successBox as HTMLElement).focus?.();
+      }
+    });
+  }
+  initApplyForm();
+  document.addEventListener('astro:page-load', initApplyForm);
+</script>

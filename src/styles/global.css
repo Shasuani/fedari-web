@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   FEDARI — global design system
+   Palette + type are the brand source of truth (logo kit PDF).
+   Navy + off-white carry the page; electric blue is accent only.
+   ============================================================ */
+
+@layer base {
+  :root {
+    --navy: #0A1D3D;
+    --blue: #146BFF;
+    --offwhite: #F5F7FA;
+    --line: #E4E7EC;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 92px; /* clear the 76px fixed header on anchor jumps */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-offwhite text-navy font-sans antialiased;
+    font-size: 17px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold text-navy;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  h1 { font-weight: 700; letter-spacing: -0.02em; }
+
+  ::selection { background: var(--blue); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  a { color: inherit; }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+
+  /* ---- Layout ---- */
+  .container-x {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-10;
+  }
+  .section {
+    @apply py-20 sm:py-24 lg:py-32;
+  }
+  .section-tight {
+    @apply py-14 sm:py-16 lg:py-20;
+  }
+
+  /* ---- Eyebrow / kicker ---- */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase text-blue-600;
+    letter-spacing: 0.14em;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-px w-6 bg-blue-600/70;
+  }
+  /* On navy backgrounds the accent rule must stay visible */
+  .eyebrow.text-blue-100::before,
+  .on-navy .eyebrow::before {
+    @apply bg-blue-100/70;
+  }
+  .eyebrow-plain {
+    @apply inline-block text-xs font-semibold uppercase text-blue-600;
+    letter-spacing: 0.14em;
+  }
+
+  /* ---- Display type ---- */
+  .display {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+    font-size: clamp(2.4rem, 1.4rem + 4.4vw, 4.6rem);
+  }
+  .h2 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3rem);
+  }
+  .h3 {
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+  }
+  .lead {
+    @apply text-muted;
+    font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.3rem);
+    line-height: 1.6;
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold
+           transition duration-300 ease-lux;
+    min-height: 52px;
+  }
+  .btn-primary {
+    @apply btn bg-blue text-white shadow-[0_10px_30px_-12px_rgba(20,107,255,0.7)]
+           hover:bg-blue-600 hover:-translate-y-0.5;
+  }
+  .btn-secondary {
+    @apply btn border border-navy/25 bg-transparent text-navy hover:border-navy hover:bg-navy hover:text-white;
+  }
+  .btn-ghost-light {
+    @apply btn border border-white/40 text-white hover:bg-white hover:text-navy;
+  }
+  .btn-whatsapp {
+    @apply btn bg-[#25D366] text-white hover:brightness-95 hover:-translate-y-0.5;
+  }
+
+  /* ---- Links ---- */
+  .link-arrow {
+    @apply inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition duration-200 ease-lux hover:gap-2.5;
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    @apply rounded-2xl border border-line bg-white p-7 shadow-card transition duration-300 ease-lux;
+  }
+  .card-hover {
+    @apply card hover:-translate-y-1 hover:shadow-lift hover:border-blue/30;
+  }
+
+  /* ---- Forms ---- */
+  .field { @apply flex flex-col gap-2; }
+  .field-label { @apply text-sm font-semibold text-navy; }
+  .field-label .req { @apply text-blue-600; }
+  .field-input {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-navy
+           placeholder:text-muted/60 transition
+           focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/30;
+    min-height: 52px;
+  }
+  textarea.field-input { min-height: 128px; }
+  .field-help { @apply text-xs text-muted; }
+  .field-error { @apply text-xs font-medium text-red-600; }
+  .field-input[aria-invalid='true'] { @apply border-red-500 ring-2 ring-red-500/20; }
+
+  /* ---- Trust / meta ---- */
+  .hairline { @apply border-t border-line; }
+
+  /* ---- Dark section helper ---- */
+  .on-navy { @apply bg-navy text-white; }
+  .on-navy .lead { @apply text-white/70; }
+  .on-navy h1, .on-navy h2, .on-navy h3, .on-navy h4 { @apply text-white; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Scroll-reveal — progressive enhancement.
+     Content is visible by default; only hidden once JS marks <html class="js">,
+     so no-JS users and crawlers always see everything. */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease, cubic-bezier(0.22,1,0.36,1)),
+                transform 0.7s var(--ease, cubic-bezier(0.22,1,0.36,1));
+    will-change: opacity, transform;
+  }
+  .js .reveal.is-in { opacity: 1; transform: none; will-change: auto; }
+
+  .hero-zoom { animation: hero-zoom 14s ease-out forwards; }
+
+  /* Subtle fade-in for lazy images once decoded (JS-gated so no-JS always shows them) */
+  .js img[loading="lazy"] { opacity: 0; transition: opacity 0.6s var(--ease, cubic-bezier(0.22,1,0.36,1)); }
+  .js img[loading="lazy"][data-loaded] { opacity: 1; }
+}
+
+/* Smooth native <details> accordions where supported (progressive enhancement) */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  details::details-content {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: height 0.35s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+                opacity 0.35s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+                content-visibility 0.35s allow-discrete;
+  }
+  details[open]::details-content { height: auto; opacity: 1; }
+}
+
+/* Respect reduced motion — disables all brand animation */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .js img[loading="lazy"] { opacity: 1 !important; transition: none !important; }
+  details::details-content { transition: none !important; }
+  .hero-zoom { animation: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

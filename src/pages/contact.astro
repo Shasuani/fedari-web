@@ -1,0 +1,336 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { COMPANY, SERVICES } from '../data/site';
+import { contactPageLd, breadcrumbLd } from '../data/jsonld';
+
+const methods = [
+  {
+    label: 'Call us',
+    value: COMPANY.phone,
+    href: COMPANY.phoneHref,
+    track: 'call_click',
+    hint: 'Sat–Thu 8:00–20:00 · Emergency line 24/7',
+    icon: 'phone',
+  },
+  {
+    label: 'WhatsApp',
+    value: COMPANY.whatsapp,
+    href: COMPANY.whatsappMessage,
+    track: 'whatsapp_click',
+    hint: 'Send photos of the issue for a faster quote.',
+    icon: 'whatsapp',
+  },
+  {
+    label: 'Email',
+    value: COMPANY.email,
+    href: COMPANY.emailHref,
+    track: null,
+    hint: 'We reply to every enquiry, usually the same day.',
+    icon: 'mail',
+  },
+];
+
+const details = [
+  { label: 'Service area', value: COMPANY.areaServed, hint: `${COMPANY.flagshipCommunity} and villa communities across Dubai.` },
+  { label: 'Hours', value: COMPANY.hours, hint: null },
+];
+---
+<BaseLayout
+  title="Contact Fedari — get in touch or request a quote"
+  description="Contact Fedari for premium Dubai villa property care. Call, WhatsApp or email us, or request a transparent quote using the form. We reply the same day."
+  path="/contact"
+  jsonLd={[contactPageLd, breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }])]}
+>
+  <!-- HERO -->
+  <section class="bg-offwhite">
+    <div class="container-x section-tight pt-28 lg:pt-36">
+      <div class="max-w-3xl">
+        <span class="eyebrow">Contact</span>
+        <h1 class="display mt-5">Get in touch</h1>
+        <p class="lead mt-6 max-w-2xl">Call, message or send us a few details about your villa. We come back with a clear, transparent quote — usually the same day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT + FORM -->
+  <section class="section bg-white">
+    <div class="container-x grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <!-- LEFT: contact methods -->
+      <div class="reveal">
+        <SectionHeading eyebrow="Talk to us" title="Ways to reach Fedari" lead="Choose whatever is easiest — a real person will help, not a call centre." />
+
+        <ul class="mt-10 divide-y divide-line border-y border-line">
+          {methods.map((m) => (
+            <li class="py-6">
+              <a
+                href={m.href}
+                {...(m.track ? { 'data-track': m.track } : {})}
+                {...(m.icon === 'whatsapp' ? { target: '_blank', rel: 'noopener' } : {})}
+                class="group flex items-start gap-4"
+              >
+                <span class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-offwhite ring-1 ring-line text-blue-600 transition group-hover:bg-navy group-hover:text-white">
+                  {m.icon === 'phone' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  )}
+                  {m.icon === 'whatsapp' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.83c2.16 0 4.19.84 5.72 2.37a8.04 8.04 0 0 1 2.37 5.72c0 4.46-3.63 8.08-8.09 8.08-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.02 8.02 0 0 1-1.23-4.28c0-4.46 3.63-8.08 8.09-8.08zm4.7 10.28c-.06-.11-.24-.18-.5-.31-.26-.13-1.52-.75-1.76-.84-.24-.09-.41-.13-.58.13-.17.26-.67.84-.82 1.01-.15.17-.3.19-.56.06-.26-.13-1.09-.4-2.07-1.28-.77-.68-1.28-1.53-1.43-1.79-.15-.26-.02-.4.11-.53.12-.12.26-.3.39-.46.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44l-.5-.01c-.17 0-.45.06-.68.32-.24.26-.9.88-.9 2.15 0 1.27.92 2.49 1.05 2.66.13.17 1.82 2.78 4.41 3.9.62.27 1.1.43 1.47.55.62.2 1.18.17 1.63.1.5-.07 1.52-.62 1.74-1.22.21-.6.21-1.11.15-1.22z"/></svg>
+                  )}
+                  {m.icon === 'mail' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+                  )}
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-xs font-semibold uppercase tracking-wide text-muted">{m.label}</span>
+                  <span class="mt-0.5 block text-lg font-semibold text-navy transition group-hover:text-blue-600">{m.value}</span>
+                  {m.hint && <span class="mt-1 block text-sm leading-relaxed text-muted">{m.hint}</span>}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <dl class="mt-8 grid gap-6 sm:grid-cols-2">
+          {details.map((d) => (
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wide text-muted">{d.label}</dt>
+              <dd class="mt-1 text-base font-medium text-navy">{d.value}</dd>
+              {d.hint && <dd class="mt-1 text-sm text-muted">{d.hint}</dd>}
+            </div>
+          ))}
+        </dl>
+
+        <p class="mt-8 flex items-start gap-3 rounded-2xl bg-offwhite p-5 text-sm leading-relaxed text-navy ring-1 ring-line">
+          <svg class="mt-0.5 shrink-0 text-blue-600" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Every enquiry is handled by our own team. We never share your details, and you get a written scope and price before any work begins.</span>
+        </p>
+      </div>
+
+      <!-- RIGHT: form -->
+      <div class="reveal">
+        <div class="rounded-3xl bg-offwhite p-7 ring-1 ring-line sm:p-10">
+          <h2 class="h3">Request a quote</h2>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Tell us what you need and how to reach you. Fields marked <span class="text-blue-600">*</span> are required.</p>
+
+          <form
+            id="contact-form"
+            action="https://formspree.io/f/REPLACE_ME"
+            method="post"
+            enctype="multipart/form-data"
+            novalidate
+            class="mt-8 space-y-6"
+          >
+            <div class="field">
+              <label class="field-label" for="cf-name">Full name <span class="req" aria-hidden="true">*</span></label>
+              <input class="field-input" type="text" id="cf-name" name="name" autocomplete="name" required aria-required="true" aria-describedby="cf-name-error" />
+              <p class="field-error hidden" id="cf-name-error" role="alert">Please enter your name.</p>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="field">
+                <label class="field-label" for="cf-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+                <input class="field-input" type="tel" id="cf-phone" name="phone" autocomplete="tel" inputmode="tel" required aria-required="true" aria-describedby="cf-phone-error" />
+                <p class="field-error hidden" id="cf-phone-error" role="alert">Please enter a phone number.</p>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="cf-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input class="field-input" type="email" id="cf-email" name="email" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="cf-email-error" />
+                <p class="field-error hidden" id="cf-email-error" role="alert">Please enter a valid email address.</p>
+              </div>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="field">
+                <label class="field-label" for="cf-community">Community <span class="req" aria-hidden="true">*</span></label>
+                <input class="field-input" type="text" id="cf-community" name="community" list="cf-communities" autocomplete="address-level3" required aria-required="true" aria-describedby="cf-community-error" placeholder="e.g. DAMAC Lagoons" />
+                <datalist id="cf-communities">
+                  {COMPANY.communities.map((c) => (<option value={c}></option>))}
+                </datalist>
+                <p class="field-error hidden" id="cf-community-error" role="alert">Please tell us your community or area.</p>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="cf-service">Service</label>
+                <select class="field-input" id="cf-service" name="service">
+                  <option value="" selected>Select a service (optional)</option>
+                  {SERVICES.map((s) => (<option value={s.title}>{s.title}</option>))}
+                  <option value="Something else">Something else</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="cf-message">Message <span class="req" aria-hidden="true">*</span></label>
+              <textarea class="field-input" id="cf-message" name="message" rows="5" required aria-required="true" aria-describedby="cf-message-help cf-message-error" placeholder="Tell us about the issue and any preferred timing."></textarea>
+              <p class="field-help" id="cf-message-help">The more detail you share, the more accurate your quote.</p>
+              <p class="field-error hidden" id="cf-message-error" role="alert">Please add a short message.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="cf-photos">Photos <span class="field-help inline font-normal">(optional — a photo of the issue speeds up your quote)</span></label>
+              <input class="field-input py-2.5 file:mr-4 file:rounded-full file:border-0 file:bg-navy file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-navy-700" type="file" id="cf-photos" name="photos" accept="image/*" multiple aria-describedby="cf-photos-help" />
+              <p class="field-help" id="cf-photos-help">JPG, PNG or HEIC. You can attach more than one.</p>
+            </div>
+
+            <fieldset class="field">
+              <legend class="field-label">Preferred contact method</legend>
+              <div class="mt-1 flex flex-wrap gap-3">
+                {[
+                  { v: 'WhatsApp', d: true },
+                  { v: 'Call', d: false },
+                  { v: 'Email', d: false },
+                ].map((o) => (
+                  <label class="flex cursor-pointer items-center gap-2 rounded-full border border-line bg-white px-4 py-2.5 text-sm font-medium text-navy transition has-[:checked]:border-blue has-[:checked]:bg-blue-100">
+                    <input class="h-4 w-4 text-blue-600 focus:ring-2 focus:ring-blue/30" type="radio" name="preferred_contact" value={o.v} checked={o.d} />
+                    {o.v}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label class="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-navy">
+                <input class="mt-0.5 h-5 w-5 shrink-0 rounded border-line text-blue-600 focus:ring-2 focus:ring-blue/30" type="checkbox" id="cf-consent" name="consent" required aria-required="true" aria-describedby="cf-consent-error" />
+                <span>I agree to be contacted by Fedari about my enquiry. <span class="text-blue-600" aria-hidden="true">*</span></span>
+              </label>
+              <p class="field-error hidden" id="cf-consent-error" role="alert">Please tick the box so we can reply to you.</p>
+            </div>
+
+            <!-- honeypot -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+
+            <div>
+              <button type="submit" class="btn-primary w-full sm:w-auto" data-submit>Send enquiry</button>
+              <p class="field-error mt-4 hidden" id="cf-form-error" role="alert">Something went wrong sending your message. Please try again, or contact us on WhatsApp.</p>
+            </div>
+          </form>
+
+          <!-- success state -->
+          <div id="contact-success" class="hidden" role="status" aria-live="polite">
+            <div class="flex flex-col items-center py-10 text-center">
+              <span class="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              <h2 class="h3 mt-6">Thank you — your enquiry is in</h2>
+              <p class="mt-3 max-w-sm text-sm leading-relaxed text-muted">We have received your details and will come back to you, usually the same day. For anything urgent, message us on WhatsApp.</p>
+              <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" target="_blank" rel="noopener" class="btn-whatsapp mt-7">Chat on WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="section-tight bg-offwhite">
+    <div class="container-x">
+      <SectionHeading eyebrow="Where we work" title="Serving Dubai’s villa communities" lead={`Based in Dubai with a focus on ${COMPANY.flagshipCommunity}, and covering villa communities across the emirate. Share your location when you enquire and we’ll confirm scheduling.`} class="reveal" />
+      <div class="reveal mt-10 overflow-hidden rounded-2xl ring-1 ring-line">
+        <iframe
+          src={COMPANY.mapEmbed}
+          title="Map of Fedari's Dubai service area"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="h-[380px] w-full border-0 md:h-[460px]"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = '1';
+    const success = document.getElementById('contact-success');
+    const formError = document.getElementById('cf-form-error');
+    const submitBtn = form.querySelector('[data-submit]');
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const fields = [
+      { id: 'cf-name', err: 'cf-name-error', test: (v) => v.trim().length > 0 },
+      { id: 'cf-phone', err: 'cf-phone-error', test: (v) => v.trim().length >= 6 },
+      { id: 'cf-email', err: 'cf-email-error', test: (v) => emailRe.test(v.trim()) },
+      { id: 'cf-community', err: 'cf-community-error', test: (v) => v.trim().length > 1 },
+      { id: 'cf-message', err: 'cf-message-error', test: (v) => v.trim().length >= 5 },
+      { id: 'cf-consent', err: 'cf-consent-error', test: (_, el) => el.checked },
+    ];
+
+    function setError(f, show) {
+      const el = document.getElementById(f.id);
+      const errEl = document.getElementById(f.err);
+      if (!el || !errEl) return;
+      errEl.classList.toggle('hidden', !show);
+      if (el.type === 'checkbox') {
+        if (show) el.setAttribute('aria-invalid', 'true');
+        else el.removeAttribute('aria-invalid');
+      } else {
+        if (show) el.setAttribute('aria-invalid', 'true');
+        else el.removeAttribute('aria-invalid');
+      }
+    }
+
+    function validate() {
+      let firstInvalid = null;
+      fields.forEach((f) => {
+        const el = document.getElementById(f.id);
+        const ok = f.test(el.value || '', el);
+        setError(f, !ok);
+        if (!ok && !firstInvalid) firstInvalid = el;
+      });
+      return firstInvalid;
+    }
+
+    fields.forEach((f) => {
+      const el = document.getElementById(f.id);
+      if (!el) return;
+      const ev = el.type === 'checkbox' ? 'change' : 'blur';
+      el.addEventListener(ev, () => {
+        if (el.getAttribute('aria-invalid') === 'true') {
+          setError(f, !f.test(el.value || '', el));
+        }
+      });
+    });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      formError.classList.add('hidden');
+      const firstInvalid = validate();
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+
+        if (res.ok) {
+          form.classList.add('hidden');
+          success.classList.remove('hidden');
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+          if (window.gtag) window.gtag('event', 'generate_lead');
+        } else {
+          throw new Error('Bad response');
+        }
+      } catch (err) {
+        formError.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    });
+  }
+  initContactForm();
+  document.addEventListener('astro:page-load', initContactForm);
+</script>

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import QuoteCTA from '../../components/QuoteCTA.astro';
+import { COMPANY, SERVICES } from '../../data/site';
+import { breadcrumbLd } from '../../data/jsonld';
+
+const crumb = breadcrumbLd([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+]);
+
+// Flagship services lead; the rest follow.
+const featured = SERVICES.slice(0, 2);
+const rest = SERVICES.slice(2);
+---
+<BaseLayout
+  title="Services for Dubai villas & townhouses"
+  description="Nine specialist property-care services for Dubai villas and townhouses — AC, plumbing, electrical, handyman, painting, inspections, snagging, move-in and preventive maintenance — from one accountable local team."
+  path="/services"
+  jsonLd={crumb}
+>
+  <!-- HERO -->
+  <section class="section-tight bg-white pt-28 lg:pt-36">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <span class="eyebrow">What we do</span>
+        <h1 class="display mt-5">Services for Dubai villas &amp; townhouses</h1>
+        <p class="lead mt-6">Nine specialist services from one accountable local team — from urgent repairs to scheduled preventive care, each delivered with transparent quotes and photo reporting on every visit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section class="section-tight bg-offwhite">
+    <div class="container-x">
+      <!-- Most requested -->
+      <div class="reveal flex items-center gap-3">
+        <span class="eyebrow-plain">Most requested</span>
+        <span class="h-px flex-1 bg-line"></span>
+      </div>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
+        {featured.map((s) => (
+          <div class="reveal relative">
+            <span class="absolute right-5 top-5 z-10 rounded-full bg-blue px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">Popular</span>
+            <ServiceCard {...s} />
+          </div>
+        ))}
+      </div>
+
+      <!-- All other services -->
+      <div class="reveal mt-14 flex items-center gap-3">
+        <span class="eyebrow-plain">More services</span>
+        <span class="h-px flex-1 bg-line"></span>
+      </div>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {rest.map((s) => (
+          <div class="reveal"><ServiceCard {...s} /></div>
+        ))}
+      </div>
+
+      <p class="reveal mt-12 text-sm text-muted">
+        Not sure what you need?
+        <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="font-semibold text-blue-600 hover:text-navy">Message us on WhatsApp</a>
+        or <a href="/contact" class="font-semibold text-blue-600 hover:text-navy">request a quote</a> and we’ll point you in the right direction.
+      </p>
+    </div>
+  </section>
+
+  <QuoteCTA />
+</BaseLayout>

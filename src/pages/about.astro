@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import QuoteCTA from '../components/QuoteCTA.astro';
+import { COMPANY } from '../data/site';
+import { breadcrumbLd } from '../data/jsonld';
+
+const operate = [
+  { n: '01', t: 'Vetted technicians', d: 'Every technician is background-checked, trained and directly accountable to us — never an anonymous subcontractor.' },
+  { n: '02', t: 'Clear scope', d: 'You get a written scope and price before work starts, so you always know what is being done and why.' },
+  { n: '03', t: 'Photo reporting', d: 'Each visit is documented with before-and-after photos you can keep, review and share.' },
+  { n: '04', t: 'Real accountability', d: 'One team owns the job from first message to sign-off. If something is not right, you have one number to call.' },
+];
+
+const values = [
+  { t: 'Standards over shortcuts', d: 'We do the job the way it should be done — proper parts, proper method — even when a quicker fix would go unnoticed.' },
+  { t: 'Plain, honest communication', d: 'We explain problems in language you understand, quote fairly, and tell you when something can wait.' },
+  { t: 'Care for the whole home', d: 'We treat your home as a system, not a list of call-outs, so small issues are caught before they become expensive ones.' },
+  { t: 'Respect for your time and space', d: 'On-time arrivals, tidy work, and technicians who treat your home with the care they would want in their own.' },
+];
+
+const credibility = [
+  { t: 'Certified & insured', d: 'Trained, vetted technicians and full liability cover on every job.' },
+  { t: '24/7 emergency', d: 'A real response line for leaks, AC failures and power faults.' },
+  { t: 'Transparent by default', d: 'Written scope and price before any work begins.' },
+  { t: 'Dubai property specialists', d: 'We know the communities, the climate and the common issues.' },
+];
+---
+<BaseLayout
+  title="About Fedari — property care built on standards"
+  description="Fedari brings reliable, accountable property care to Dubai villas and townhouses — vetted technicians, clear scope, photo reporting and transparent pricing on every visit."
+  path="/about"
+  jsonLd={[breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])]}
+>
+  <!-- HERO -->
+  <section class="bg-offwhite">
+    <div class="container-x section-tight pt-28 lg:pt-36">
+      <div class="max-w-3xl">
+        <span class="eyebrow">About Fedari</span>
+        <h1 class="display mt-5">Property care built on standards, not shortcuts</h1>
+        <p class="lead mt-6 max-w-2xl">Fedari is a Dubai property-care team for villa and townhouse owners and residents who expect the work done properly the first time — with clear communication, fair pricing and real accountability behind every visit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section bg-white">
+    <div class="container-x grid items-center gap-14 lg:grid-cols-2">
+      <div class="reveal relative overflow-hidden rounded-3xl">
+        <img src="/images/about.jpg" alt="Contemporary Dubai villa exterior with clean landscaping" width="1000" height="1200" loading="lazy" decoding="async" class="aspect-[5/6] w-full object-cover" />
+      </div>
+      <div class="reveal">
+        <SectionHeading eyebrow="Why we exist" title="Property care in Dubai should be simpler than this" lead="Owning or renting a Dubai home often means juggling a different contractor for every problem — and hoping each one shows up, quotes fairly and finishes the job." />
+        <div class="mt-8 space-y-5 text-base leading-relaxed text-muted">
+          <p>We started Fedari because good property care was surprisingly hard to find. Call-outs ran late. Quotes changed halfway through. Small maintenance issues were ignored until they turned into costly repairs, and no one seemed to take responsibility for the home as a whole.</p>
+          <p>Fedari fills that gap. We bring the trades that keep a home running — cooling, plumbing, electrical, handyman and more — under one accountable team, with written quotes, documented visits and a single point of contact. The result is care you can rely on, and a home that is looked after properly year-round.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE OPERATE -->
+  <section class="section bg-offwhite">
+    <div class="container-x">
+      <SectionHeading eyebrow="How we operate" title="The standards behind every visit" lead="Four commitments shape how we work — so you always know who is in your home, what they are doing and what it will cost." />
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {operate.map((o) => (
+          <div class="reveal">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-semibold text-blue-600">{o.n}</span>
+              <span class="h-px flex-1 bg-line"></span>
+            </div>
+            <h3 class="mt-3 text-base font-semibold text-navy">{o.t}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{o.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <SectionHeading eyebrow="What we stand for" title="Values we hold on every job" />
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {values.map((v) => (
+          <div class="reveal card">
+            <h3 class="h3">{v.t}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{v.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO SPLIT -->
+  <section class="section bg-offwhite">
+    <div class="container-x grid items-center gap-14 lg:grid-cols-2">
+      <div class="reveal order-2 lg:order-1">
+        <SectionHeading eyebrow="Our approach" title="One team that treats your home as a whole" lead="Because we handle the full range of home maintenance, we spot the connections others miss — the AC strain behind a rising bill, the small leak that leads to bigger damage." />
+        <p class="mt-8 text-base leading-relaxed text-muted">That perspective is what keeps homes in good condition and owners free of surprises. Whether it is a one-off repair or a scheduled maintenance plan, the same standards and the same accountable team apply.</p>
+        <a href="/services" class="link-arrow mt-8">Explore our services
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="reveal order-1 overflow-hidden rounded-3xl lg:order-2">
+        <img src="/images/about-2.jpg" alt="Fedari technician carrying out maintenance work inside a Dubai villa" width="1000" height="800" loading="lazy" decoding="async" class="aspect-[5/4] w-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDIBILITY STRIP -->
+  <section class="on-navy">
+    <div class="container-x section-tight">
+      <div class="max-w-2xl">
+        <span class="eyebrow text-blue-100">Why owners trust us</span>
+        <h2 class="h2 mt-4 text-white">Reliable, insured and Dubai-focused</h2>
+      </div>
+      <div class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {credibility.map((c) => (
+          <div class="reveal">
+            <span class="block h-px w-8 bg-blue-100/70"></span>
+            <p class="mt-4 text-base font-semibold text-white">{c.t}</p>
+            <p class="mt-2 text-sm leading-relaxed text-white/70">{c.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <QuoteCTA />
+</BaseLayout>

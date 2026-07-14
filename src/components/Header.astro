@@ -1,0 +1,175 @@
+---
+import Logo from './Logo.astro';
+import { NAV, COMPANY } from '../data/site';
+interface Props { transparent?: boolean; }
+const { transparent = false } = Astro.props;
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header
+  id="site-header"
+  data-transparent={transparent ? 'true' : 'false'}
+  class:list={[
+    'fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-lux',
+    transparent ? 'is-top' : 'bg-white/95 backdrop-blur border-b border-line',
+  ]}
+>
+  <div class="container-x flex h-[76px] items-center justify-between gap-4">
+    <Logo variant="navy" class="header-logo" />
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-7">
+        {NAV.filter((n) => n.href !== '/').map((item) => {
+          const active = current === item.href.replace(/\/$/, '');
+          return (
+            <li>
+              <a
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'nav-link text-sm font-medium transition-colors duration-200 ease-lux',
+                  active ? 'text-blue-600' : 'text-navy/80 hover:text-blue-600',
+                ]}
+              >{item.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <div class="hidden items-center gap-3 lg:flex">
+      <a href={COMPANY.phoneHref} class="nav-link text-sm font-semibold text-navy/80 hover:text-blue-600" data-track="call_click">{COMPANY.phone}</a>
+      <a href="/contact" class="btn-primary !min-h-0 !py-2.5 !px-5">Get a Quote</a>
+    </div>
+
+    <button
+      id="menu-toggle"
+      class="hamburger lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-full text-navy"
+      aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"
+    >
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <line class="ham-top" x1="4" y1="8" x2="22" y2="8" />
+        <line class="ham-mid" x1="4" y1="13" x2="22" y2="13" />
+        <line class="ham-bot" x1="4" y1="18" x2="22" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 lg:hidden" aria-hidden="true">
+    <div id="mobile-overlay" class="absolute inset-0 bg-navy/50 backdrop-blur-sm"></div>
+    <div id="mobile-panel" class="absolute inset-0 flex flex-col overflow-y-auto bg-navy text-white">
+      <div class="container-x flex h-[76px] shrink-0 items-center justify-between">
+        <Logo variant="white" />
+        <button id="menu-close" class="inline-flex h-11 w-11 items-center justify-center rounded-full ring-1 ring-white/15 transition hover:bg-white/10" aria-label="Close menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile" class="container-x flex flex-1 flex-col pb-10 pt-2">
+        <ul class="flex flex-col divide-y divide-white/10">
+          {NAV.map((item, i) => (
+            <li><a href={item.href} class="mm-item block py-4 text-xl font-medium" style={`transition-delay:${60 + i * 45}ms`}>{item.label}</a></li>
+          ))}
+        </ul>
+        <div class="mm-item mt-auto flex flex-col gap-3 pt-10" style={`transition-delay:${60 + NAV.length * 45}ms`}>
+          <a href={COMPANY.whatsappMessage} target="_blank" rel="noopener" class="btn-whatsapp" data-track="whatsapp_click">WhatsApp us</a>
+          <a href={COMPANY.phoneHref} class="btn-ghost-light" data-track="call_click">Call {COMPANY.phone}</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  #site-header.is-top { background: transparent; border-color: transparent; }
+  #site-header.is-top :global(.nav-link) { color: rgba(255,255,255,0.9); }
+  #site-header.is-top :global(.nav-link:hover) { color: #fff; }
+  #site-header.is-top :global(.header-logo .flex span:first-child) { color: #fff !important; }
+  #site-header.is-top :global(.header-logo svg path[fill="#0A1D3D"]) { fill: #fff; }
+  #site-header.is-top .hamburger { color: #fff; }
+
+  /* ---- Mobile menu open/close animation ---- */
+  #mobile-menu {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #mobile-menu.is-open { opacity: 1; pointer-events: auto; }
+
+  #mobile-overlay { opacity: 0; transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+  #mobile-menu.is-open #mobile-overlay { opacity: 1; }
+
+  #mobile-panel {
+    transform: translateY(-14px) scale(0.985);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+  }
+  #mobile-menu.is-open #mobile-panel { transform: none; opacity: 1; }
+
+  /* Staggered nav items */
+  .mm-item {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #mobile-menu.is-open .mm-item { opacity: 1; transform: none; }
+
+  /* Hamburger -> X morph */
+  .hamburger svg line { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease; transform-origin: center; }
+  .hamburger[aria-expanded="true"] .ham-top { transform: translateY(5px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] .ham-mid { opacity: 0; }
+  .hamburger[aria-expanded="true"] .ham-bot { transform: translateY(-5px) rotate(-45deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    #mobile-menu, #mobile-overlay, #mobile-panel, .mm-item, .hamburger svg line { transition: none !important; }
+    #mobile-panel { transform: none; }
+  }
+</style>
+
+<script>
+  // Re-runs on first load and after every View Transitions navigation.
+  function initHeader() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+    const isTransparent = header.dataset.transparent === 'true';
+    header.classList.toggle('is-top', isTransparent);
+
+    // Scroll state — dedupe the window listener across navigations.
+    if (window.__fedariScroll) { window.removeEventListener('scroll', window.__fedariScroll); window.__fedariScroll = null; }
+    if (isTransparent) {
+      const onScroll = () => header.classList.toggle('is-top', window.scrollY <= 24);
+      window.__fedariScroll = onScroll;
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    // Mobile menu — guard so bindings never stack if init runs twice on one DOM.
+    const toggle = document.getElementById('menu-toggle');
+    if (toggle && !toggle.dataset.bound) {
+      toggle.dataset.bound = '1';
+      const menu = document.getElementById('mobile-menu');
+      const close = document.getElementById('menu-close');
+      const overlay = document.getElementById('mobile-overlay');
+      const open = () => { menu?.classList.add('is-open'); menu?.setAttribute('aria-hidden', 'false'); toggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; };
+      const shut = () => { menu?.classList.remove('is-open'); menu?.setAttribute('aria-hidden', 'true'); toggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; };
+      toggle.addEventListener('click', () => (menu?.classList.contains('is-open') ? shut() : open()));
+      close?.addEventListener('click', shut);
+      overlay?.addEventListener('click', shut);
+      menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', shut));
+    }
+  }
+
+  document.addEventListener('astro:page-load', initHeader);
+  // Always release scroll lock before a page swap.
+  document.addEventListener('astro:before-swap', () => { document.body.style.overflow = ''; });
+  // Escape closes the menu — bound once (document persists across navigations).
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const menu = document.getElementById('mobile-menu');
+    if (menu && menu.classList.contains('is-open')) {
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      document.getElementById('menu-toggle')?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
