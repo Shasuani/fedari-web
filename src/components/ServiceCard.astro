@@ -1,12 +1,13 @@
 ---
 import ServiceIcon from './ServiceIcon.astro';
 import { serviceUrl } from '../data/site';
+import { withBase } from '../lib/url';
 interface Props { slug: string; title: string; short: string; icon: string; }
 const { slug, title, short, icon } = Astro.props;
-const img = `/images/services/${slug}.jpg`;
+const img = withBase(`/images/services/${slug}.jpg`);
 ---
 <a
-  href={serviceUrl(slug)}
+  href={withBase(serviceUrl(slug))}
   class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-300 ease-lux hover:-translate-y-1 hover:border-blue/30 hover:shadow-lift"
 >
   <div class="relative aspect-[16/10] overflow-hidden">

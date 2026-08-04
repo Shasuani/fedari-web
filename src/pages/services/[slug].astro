@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
@@ -44,9 +45,9 @@ const jsonLd = [
       <!-- Breadcrumb -->
       <nav aria-label="Breadcrumb" class="mb-8">
         <ol class="flex flex-wrap items-center gap-2 text-sm text-muted">
-          <li><a href="/" class="transition-colors duration-200 ease-lux hover:text-blue-600">Home</a></li>
+          <li><a href={withBase('/')} class="transition-colors duration-200 ease-lux hover:text-blue-600">Home</a></li>
           <li aria-hidden="true" class="text-line">/</li>
-          <li><a href="/services" class="transition-colors duration-200 ease-lux hover:text-blue-600">Services</a></li>
+          <li><a href={withBase('/services')} class="transition-colors duration-200 ease-lux hover:text-blue-600">Services</a></li>
           <li aria-hidden="true" class="text-line">/</li>
           <li class="font-medium text-navy" aria-current="page">{title}</li>
         </ol>
@@ -59,13 +60,13 @@ const jsonLd = [
           <p class="lead mt-6 max-w-xl font-medium text-navy">{detail.heroBenefit}</p>
           <p class="mt-5 max-w-xl text-base leading-relaxed text-muted">{detail.intro}</p>
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a href="/contact" class="btn-primary">Get a quote</a>
+            <a href={withBase('/contact')} class="btn-primary">Get a quote</a>
             <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp">Chat on WhatsApp</a>
           </div>
         </div>
         <div class="reveal relative overflow-hidden rounded-3xl">
           <img
-            src={detail.image}
+            src={withBase(detail.image)}
             alt={`${title} for Dubai villas and townhouses — Fedari`}
             width="1000"
             height="1120"
@@ -149,7 +150,7 @@ const jsonLd = [
     <div class="container-x">
       <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <SectionHeading eyebrow="More care" title="Explore other services" lead="One accountable team across every part of your villa." />
-        <a href="/services" class="link-arrow shrink-0">View all services
+        <a href={withBase('/services')} class="link-arrow shrink-0">View all services
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>

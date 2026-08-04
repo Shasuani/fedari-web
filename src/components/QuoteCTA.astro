@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import { COMPANY } from '../data/site';
 interface Props {
   title?: string;
@@ -25,7 +26,7 @@ const navy = variant === 'navy';
           <p class:list={['lead mt-5 max-w-lg', navy && 'text-white/70']}>{text}</p>
         </div>
         <div class="flex flex-col gap-3 lg:items-end">
-          <a href="/contact" class="btn-primary w-full sm:w-auto">Request a quote</a>
+          <a href={withBase('/contact')} class="btn-primary w-full sm:w-auto">Request a quote</a>
           <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp w-full sm:w-auto">Chat on WhatsApp</a>
           <a href={COMPANY.phoneHref} data-track="call_click" class:list={['w-full text-center text-sm font-semibold sm:w-auto', navy ? 'text-white/80 hover:text-white' : 'text-navy hover:text-blue-600']}>or call {COMPANY.phone}</a>
         </div>

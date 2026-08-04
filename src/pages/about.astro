@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import QuoteCTA from '../components/QuoteCTA.astro';
@@ -47,7 +48,7 @@ const credibility = [
   <section class="section bg-white">
     <div class="container-x grid items-center gap-14 lg:grid-cols-2">
       <div class="reveal relative overflow-hidden rounded-3xl">
-        <img src="/images/about.jpg" alt="Contemporary Dubai villa exterior with clean landscaping" width="1000" height="1200" loading="lazy" decoding="async" class="aspect-[5/6] w-full object-cover" />
+        <img src={withBase('/images/about.jpg')} alt="Contemporary Dubai villa exterior with clean landscaping" width="1000" height="1200" loading="lazy" decoding="async" class="aspect-[5/6] w-full object-cover" />
       </div>
       <div class="reveal">
         <SectionHeading eyebrow="Why we exist" title="Property care in Dubai should be simpler than this" lead="Owning or renting a Dubai home often means juggling a different contractor for every problem — and hoping each one shows up, quotes fairly and finishes the job." />
@@ -99,12 +100,12 @@ const credibility = [
       <div class="reveal order-2 lg:order-1">
         <SectionHeading eyebrow="Our approach" title="One team that treats your home as a whole" lead="Because we handle the full range of home maintenance, we spot the connections others miss — the AC strain behind a rising bill, the small leak that leads to bigger damage." />
         <p class="mt-8 text-base leading-relaxed text-muted">That perspective is what keeps homes in good condition and owners free of surprises. Whether it is a one-off repair or a scheduled maintenance plan, the same standards and the same accountable team apply.</p>
-        <a href="/services" class="link-arrow mt-8">Explore our services
+        <a href={withBase('/services')} class="link-arrow mt-8">Explore our services
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
       <div class="reveal order-1 overflow-hidden rounded-3xl lg:order-2">
-        <img src="/images/about-2.jpg" alt="Fedari technician carrying out maintenance work inside a Dubai villa" width="1000" height="800" loading="lazy" decoding="async" class="aspect-[5/4] w-full object-cover" />
+        <img src={withBase('/images/about-2.jpg')} alt="Fedari technician carrying out maintenance work inside a Dubai villa" width="1000" height="800" loading="lazy" decoding="async" class="aspect-[5/4] w-full object-cover" />
       </div>
     </div>
   </section>

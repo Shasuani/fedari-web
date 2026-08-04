@@ -1,5 +1,6 @@
 ---
 import { COMPANY } from '../data/site';
+import { withBase } from '../lib/url';
 interface Props {
   title: string;
   description: string;
@@ -18,8 +19,10 @@ const {
 } = Astro.props;
 
 const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://fedari.ae';
-const canonical = `${site}${path}`;
-const ogImage = image.startsWith('http') ? image : `${site}${image}`;
+// Paths arrive root-relative ('/services/…'); the deployment base is added here
+// so canonical and OG URLs stay correct while the site is on a project page.
+const canonical = `${site}${withBase(path || '/')}`;
+const ogImage = image.startsWith('http') ? image : `${site}${withBase(image)}`;
 const fullTitle = title.includes(COMPANY.name) ? title : `${title} · ${COMPANY.name}`;
 const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---

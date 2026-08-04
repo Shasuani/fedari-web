@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ServiceCard from '../components/ServiceCard.astro';
@@ -55,7 +56,7 @@ const faqs = [
   <!-- HERO -->
   <section class="relative flex min-h-[92svh] items-center overflow-hidden">
     <div class="absolute inset-0">
-      <img src="/images/hero-home.jpg" alt="Contemporary Dubai villa at dusk with warm interior lighting" width="1920" height="1280" fetchpriority="high" decoding="async" class="hero-zoom h-full w-full object-cover" />
+      <img src={withBase('/images/hero-home.jpg')} alt="Contemporary Dubai villa at dusk with warm interior lighting" width="1920" height="1280" fetchpriority="high" decoding="async" class="hero-zoom h-full w-full object-cover" />
       <div class="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/60 to-navy/25"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent"></div>
     </div>
@@ -65,7 +66,7 @@ const faqs = [
         <h1 class="display mt-5 text-white">Premium property care for Dubai villas &amp; townhouses</h1>
         <p class="lead mt-6 max-w-xl text-white/80">Maintenance, repairs and 24/7 emergency service — delivered by a vetted local team, with transparent quotes and photo reporting on every visit.</p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href="/contact" class="btn-primary">Get a quote</a>
+          <a href={withBase('/contact')} class="btn-primary">Get a quote</a>
           <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp">Chat on WhatsApp</a>
         </div>
       </div>
@@ -89,7 +90,7 @@ const faqs = [
     <div class="container-x">
       <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <SectionHeading eyebrow="What we do" title="Complete care for your home" lead="Nine specialist services, one accountable team — from urgent repairs to scheduled preventive maintenance." />
-        <a href="/services" class="link-arrow shrink-0">View all services
+        <a href={withBase('/services')} class="link-arrow shrink-0">View all services
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
@@ -105,7 +106,7 @@ const faqs = [
   <section class="section bg-white">
     <div class="container-x grid items-center gap-14 lg:grid-cols-2">
       <div class="reveal relative overflow-hidden rounded-3xl">
-        <img src="/images/why-fedari.jpg" alt="Fedari technician inspecting a villa air-conditioning unit" width="900" height="1050" loading="lazy" decoding="async" class="aspect-[4/5] w-full object-cover" />
+        <img src={withBase('/images/why-fedari.jpg')} alt="Fedari technician inspecting a villa air-conditioning unit" width="900" height="1050" loading="lazy" decoding="async" class="aspect-[4/5] w-full object-cover" />
       </div>
       <div>
         <SectionHeading eyebrow="Why Fedari" title="Property care, done properly" lead="We built Fedari to bring reliability and clear communication to property maintenance in Dubai." />
@@ -154,10 +155,10 @@ const faqs = [
             </li>
           ))}
         </ul>
-        <a href="/maintenance-plans" class="btn-secondary mt-9">Compare plans</a>
+        <a href={withBase('/maintenance-plans')} class="btn-secondary mt-9">Compare plans</a>
       </div>
       <div class="reveal relative overflow-hidden rounded-3xl">
-        <img src="/images/plans.jpg" alt="Bright, well-maintained villa living space" width="1000" height="800" loading="lazy" decoding="async" class="aspect-[5/4] w-full object-cover" />
+        <img src={withBase('/images/plans.jpg')} alt="Bright, well-maintained villa living space" width="1000" height="800" loading="lazy" decoding="async" class="aspect-[5/4] w-full object-cover" />
       </div>
     </div>
   </section>
@@ -169,7 +170,7 @@ const faqs = [
       <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3">
         {gallery.map((n) => (
           <div class="reveal overflow-hidden rounded-2xl">
-            <img src={`/images/gallery/${n}.jpg`} alt={`Fedari completed villa project ${n}`} width="600" height="600" loading="lazy" decoding="async" class="aspect-square w-full object-cover transition duration-700 ease-lux hover:scale-105" />
+            <img src={withBase(`/images/gallery/${n}.jpg`)} alt={`Fedari completed villa project ${n}`} width="600" height="600" loading="lazy" decoding="async" class="aspect-square w-full object-cover transition duration-700 ease-lux hover:scale-105" />
           </div>
         ))}
       </div>
@@ -186,7 +187,7 @@ const faqs = [
       </div>
       <div class="flex flex-col gap-3 sm:flex-row">
         <a href={COMPANY.phoneHref} data-track="call_click" class="btn-primary">Call {COMPANY.phone}</a>
-        <a href="/emergency-repairs" class="btn-ghost-light">Emergency info</a>
+        <a href={withBase('/emergency-repairs')} class="btn-ghost-light">Emergency info</a>
       </div>
     </div>
   </section>
@@ -217,7 +218,7 @@ const faqs = [
     <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
         <SectionHeading eyebrow="FAQ" title="Answers, in plain English" lead="Everything you might want to know before getting in touch." />
-        <a href="/faq" class="link-arrow mt-6">See all FAQs
+        <a href={withBase('/faq')} class="link-arrow mt-6">See all FAQs
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>

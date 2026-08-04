@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import Logo from './Logo.astro';
 import { COMPANY, SERVICES, NAV, FOOTER_LEGAL, BUILT_BY, serviceUrl } from '../data/site';
 const year = 2026; // build-time constant
@@ -11,7 +12,7 @@ const year = 2026; // build-time constant
         <p class="lead mt-5 max-w-xs text-white/70">{COMPANY.descriptionShort}</p>
         <div class="mt-6 flex gap-3">
           <a href={COMPANY.whatsappMessage} data-track="whatsapp_click" class="btn-whatsapp !min-h-0 !py-2.5 !px-5 text-xs">WhatsApp</a>
-          <a href="/contact" class="btn-ghost-light !min-h-0 !py-2.5 !px-5 text-xs">Get a Quote</a>
+          <a href={withBase('/contact')} class="btn-ghost-light !min-h-0 !py-2.5 !px-5 text-xs">Get a Quote</a>
         </div>
       </div>
 
@@ -19,7 +20,7 @@ const year = 2026; // build-time constant
         <h3 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100/80">Services</h3>
         <ul class="mt-5 space-y-2.5 text-sm text-white/70">
           {SERVICES.map((s) => (
-            <li><a href={serviceUrl(s.slug)} class="transition-colors duration-200 ease-lux hover:text-white">{s.title}</a></li>
+            <li><a href={withBase(serviceUrl(s.slug))} class="transition-colors duration-200 ease-lux hover:text-white">{s.title}</a></li>
           ))}
         </ul>
       </div>
@@ -28,9 +29,9 @@ const year = 2026; // build-time constant
         <h3 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100/80">Company</h3>
         <ul class="mt-5 space-y-2.5 text-sm text-white/70">
           {NAV.filter((n) => n.href !== '/').map((n) => (
-            <li><a href={n.href} class="transition-colors duration-200 ease-lux hover:text-white">{n.label}</a></li>
+            <li><a href={withBase(n.href)} class="transition-colors duration-200 ease-lux hover:text-white">{n.label}</a></li>
           ))}
-          <li><a href="/faq" class="transition-colors duration-200 ease-lux hover:text-white">FAQ</a></li>
+          <li><a href={withBase('/faq')} class="transition-colors duration-200 ease-lux hover:text-white">FAQ</a></li>
         </ul>
       </div>
 
@@ -59,7 +60,7 @@ const year = 2026; // build-time constant
       </p>
       <ul class="flex flex-wrap gap-x-6 gap-y-2">
         {FOOTER_LEGAL.map((l) => (
-          <li><a href={l.href} class="transition-colors duration-200 ease-lux hover:text-white">{l.label}</a></li>
+          <li><a href={withBase(l.href)} class="transition-colors duration-200 ease-lux hover:text-white">{l.label}</a></li>
         ))}
       </ul>
     </div>

@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import Logo from './Logo.astro';
 import { NAV, COMPANY } from '../data/site';
 interface Props { transparent?: boolean; }
@@ -19,11 +20,12 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     <nav aria-label="Primary" class="hidden lg:block">
       <ul class="flex items-center gap-7">
         {NAV.filter((n) => n.href !== '/').map((item) => {
-          const active = current === item.href.replace(/\/$/, '');
+          const href = withBase(item.href);
+          const active = current === href.replace(/\/$/, '');
           return (
             <li>
               <a
-                href={item.href}
+                href={href}
                 aria-current={active ? 'page' : undefined}
                 class:list={[
                   'nav-link text-sm font-medium transition-colors duration-200 ease-lux',
@@ -38,7 +40,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     <div class="hidden items-center gap-3 lg:flex">
       <a href={COMPANY.phoneHref} class="nav-link text-sm font-semibold text-navy/80 hover:text-blue-600" data-track="call_click">{COMPANY.phone}</a>
-      <a href="/contact" class="btn-primary !min-h-0 !py-2.5 !px-5">Get a Quote</a>
+      <a href={withBase('/contact')} class="btn-primary !min-h-0 !py-2.5 !px-5">Get a Quote</a>
     </div>
 
     <button
@@ -67,7 +69,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
       <nav aria-label="Mobile" class="container-x flex flex-1 flex-col pb-10 pt-2">
         <ul class="flex flex-col divide-y divide-white/10">
           {NAV.map((item, i) => (
-            <li><a href={item.href} class="mm-item block py-4 text-xl font-medium" style={`transition-delay:${60 + i * 45}ms`}>{item.label}</a></li>
+            <li><a href={withBase(item.href)} class="mm-item block py-4 text-xl font-medium" style={`transition-delay:${60 + i * 45}ms`}>{item.label}</a></li>
           ))}
         </ul>
         <div class="mm-item mt-auto flex flex-col gap-3 pt-10" style={`transition-delay:${60 + NAV.length * 45}ms`}>

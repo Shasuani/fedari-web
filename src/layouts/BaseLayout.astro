@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
@@ -29,8 +30,8 @@ const { title, description, path, image, jsonLd, transparentHeader = false, noin
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0A1D3D" />
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="apple-touch-icon" href={withBase('/icons/apple-touch-icon.png')} />
     <ViewTransitions />
     <SEO title={title} description={description} path={path} image={image} jsonLd={jsonLd} noindex={noindex} />
   </head>
