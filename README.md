@@ -1,18 +1,18 @@
-# Fedari — Property Care Website
+# Fedari: Property Care Website
 
-Marketing website for **Fedari**, a premium home-maintenance company serving villas and townhouses in Dubai.
+Marketing website for Fedari, a premium home-maintenance company serving villas and townhouses in Dubai.
 
-**Live demo:** https://shasuani.github.io/fedari-web/
+Live demo: https://shasuani.github.io/fedari-web/
 
 ![Fedari homepage](docs/screenshot.jpg)
 
 ## Highlights
 
-- **11 pages + 9 generated service pages.** Services are defined once in `src/data/services.ts`, and `src/pages/services/[slug].astro` renders a page for each.
-- **Lead capture.** A reusable, accessible `LeadForm` component with client-side validation and async submission. It powers the maintenance-plan enquiry and emergency-request forms. A WhatsApp call-to-action and a sticky mobile action bar sit alongside it.
-- **SEO.** A shared `SEO` component handles titles, descriptions, canonical URLs and Open Graph tags. The site also has `schema.org` LocalBusiness JSON-LD, an auto-generated sitemap and `robots.txt`.
-- **Single source of truth.** Company details, services, plans, FAQs, testimonials and vacancies live in typed data modules under `src/data/`. One edit updates the whole site.
-- **Continuous deployment.** Every push to `main` is built and published to GitHub Pages by GitHub Actions.
+- 11 pages + 9 generated service pages: Services are defined once in `src/data/services.ts`, and `src/pages/services/[slug].astro` renders a page for each.
+- Lead capture: A reusable, accessible `LeadForm` component with client-side validation and async submission. It powers the maintenance-plan enquiry and emergency-request forms. A WhatsApp call-to-action and a sticky mobile action bar sit alongside it.
+- SEO: A shared `SEO` component handles titles, descriptions, canonical URLs and Open Graph tags. The site also has `schema.org` LocalBusiness JSON-LD, an auto-generated sitemap and `robots.txt`.
+- Single source of truth: Company details, services, plans, FAQs, testimonials and vacancies live in typed data modules under `src/data/`. One edit updates the whole site.
+- Continuous deployment: Every push to `main` is built and published to GitHub Pages by GitHub Actions.
 
 ## Tech stack
 
